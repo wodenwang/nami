@@ -39,6 +39,7 @@ NAMI采用纯粹的JAVA语言开发，对微信官方API进行封装，内置动
 
 ## 关于我们
 - woden
+<br/>
 BPMT微信快速开发平台核心开发
 <br/>
 微信公众号: **全栈生姜头** 
@@ -46,6 +47,7 @@ BPMT微信快速开发平台核心开发
 ![](http://i.imgur.com/bfh9QVR.jpg)
 
 - borball
+<br/>
 开源项目微信JavaSDK([https://github.com/borball/weixin-sdk](https://github.com/borball/weixin-sdk "微信SDK"))发起人
 <br/>
 BPMT快速开发平台核心开发
