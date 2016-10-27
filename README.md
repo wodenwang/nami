@@ -16,15 +16,19 @@ NAMI提供了开发一个小程序服务端所需的所有服务，**包括但�
 NAMI采用纯粹的JAVA语言开发，对微信官方API进行封装，内置动态脚本引擎，对微信官方服务端API进行全封装。MINA也可以成为你JAVA项目的其中一个外部JAR包。
 
 ## NAMI关键模块
-### REST门面
-### 配置化websocket
-### 内置groovy逻辑引擎
-### 微信API封装
-### 解压即可运行的容器式封装
+- REST门面
+- 配置化websocket
+- 内置groovy逻辑引擎
+- 微信API封装
+- 解压即可运行的容器式封装
 
 ## 开始使用
 （待补充）
 
 ## 关于我们
-- woden
-- borball
+- [woden](https://github.com/wodenwang/ "woden的github")
+<br/>
+![](http://i.imgur.com/bfh9QVR.jpg)
+
+
+- [borball](https://github.com/borball/weixin-sdk "微信SDK")
