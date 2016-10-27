@@ -3,7 +3,7 @@
  * $Id: $
  * Copyright (c) 2013 by Riversoft System, all rights reserved.
  */
-package com.riversoft.script.annotation;
+package com.riversoft.core.script.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

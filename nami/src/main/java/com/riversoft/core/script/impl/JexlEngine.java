@@ -3,39 +3,38 @@
  * $Id: $
  * Copyright (c) 2012 by Riversoft System, all rights reserved.
  */
-package com.riversoft.script.impl;
+package com.riversoft.core.script.impl;
 
-import org.apache.commons.jexl2.JexlEngine;
 import org.apache.commons.jexl2.MapContext;
 import org.apache.commons.jexl2.UnifiedJEXL;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.riversoft.exception.ScriptRuntimeException;
-import com.riversoft.exception.SystemRuntimeException;
-import com.riversoft.script.ExprLangExecutor;
-import com.riversoft.script.ExprlangAnnotationScanner;
-import com.riversoft.script.ScriptExecutionContext;
-import com.riversoft.script.ScriptExecutor;
+import com.riversoft.core.exception.ScriptRuntimeException;
+import com.riversoft.core.exception.SystemRuntimeException;
+import com.riversoft.core.script.ExprLangExecutor;
+import com.riversoft.core.script.ExprlangAnnotationScanner;
+import com.riversoft.core.script.ScriptExecutionContext;
+import com.riversoft.core.script.ScriptExecutor;
 
 /**
  * @author Borball
  * 
  */
-public class JSR223Engine implements ScriptExecutor, ExprLangExecutor {
+public class JexlEngine implements ScriptExecutor, ExprLangExecutor {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = LoggerFactory.getLogger(JSR223Engine.class);
+	private static final Logger logger = LoggerFactory.getLogger(JexlEngine.class);
 
-	private JexlEngine engine;
+	private org.apache.commons.jexl2.JexlEngine engine;
 	private UnifiedJEXL unifiedJEXL;
 	@SuppressWarnings("unused")
 	private ExprlangAnnotationScanner exprlangAnnotationScanner;
 
-	public JSR223Engine() {
-		engine = new JexlEngine();
+	public JexlEngine() {
+		engine = new org.apache.commons.jexl2.JexlEngine();
 		unifiedJEXL = new UnifiedJEXL(engine);
 	}
 

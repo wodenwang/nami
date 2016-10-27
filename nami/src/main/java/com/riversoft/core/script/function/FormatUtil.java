@@ -3,12 +3,12 @@
  * $Id: $
  * Copyright (c) 2013 by Riversoft System, all rights reserved.
  */
-package com.riversoft.script.function;
+package com.riversoft.core.script.function;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.riversoft.script.annotation.ScriptSupport;
+import com.riversoft.core.script.annotation.ScriptSupport;
 import com.riversoft.util.JsonMapper;
 import org.apache.commons.lang3.StringUtils;
 

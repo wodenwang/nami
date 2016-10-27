@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd"
+	   default-init-method="init">
+
+	<bean name="expressionAndScriptExecutors" class="com.riversoft.core.script.ExpressionAndScriptExecutors">
+		<property name="elExecutor" ref="jsr223Engine" />
+		<property name="groovyExecutor" ref="groovyExecutor" />
+		<property name="javaScriptExecutor" ref="javaScriptExecutor" />
+	</bean>
+
+	<bean name="exprlangAnnotationScanner" class="com.riversoft.core.script.ExprlangAnnotationScanner" />
+
+	<bean name="jsr223Engine" class="com.riversoft.core.script.impl.JexlEngine">
+		<property name="cacheSize" value="200" />
+		<property name="lenient" value="false" />
+		<property name="exprlangAnnotationScanner" ref="exprlangAnnotationScanner" />
+	</bean>
+
+	<bean name="groovyExecutor" class="com.riversoft.core.script.impl.ScriptExecutorImpl">
+		<constructor-arg ref="exprlangAnnotationScanner" />
+		<constructor-arg value="groovy"/>
+	</bean>
+
+	<bean name="javaScriptExecutor" class="com.riversoft.core.script.impl.ScriptExecutorImpl">
+		<constructor-arg ref="exprlangAnnotationScanner" />
+		<constructor-arg value="nashorn"/>
+	</bean>
+
+</beans>

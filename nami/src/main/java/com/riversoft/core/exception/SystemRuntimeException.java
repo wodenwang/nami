@@ -3,7 +3,7 @@
  * $Id: $
  * Copyright (c) 2013 by Riversoft System, all rights reserved.
  */
-package com.riversoft.exception;
+package com.riversoft.core.exception;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 

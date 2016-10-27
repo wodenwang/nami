@@ -1,7 +1,7 @@
-package com.riversoft.script.function;
+package com.riversoft.core.script.function;
 
 import com.jayway.restassured.path.json.JsonPath;
-import com.riversoft.script.annotation.ScriptSupport;
+import com.riversoft.core.script.annotation.ScriptSupport;
 import com.riversoft.util.JsonMapper;
 
 import java.io.File;

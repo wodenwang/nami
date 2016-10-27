@@ -3,7 +3,7 @@
  * $Id: $
  * Copyright (c) 2013 by Riversoft System, all rights reserved.
  */
-package com.riversoft.script;
+package com.riversoft.core.script;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 
-import com.riversoft.script.annotation.ScriptSupport;
+import com.riversoft.core.script.annotation.ScriptSupport;
 
 /**
  * @author Borball

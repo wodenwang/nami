@@ -3,7 +3,7 @@
  * $Id: $
  * Copyright (c) 2012 by Riversoft System, all rights reserved.
  */
-package com.riversoft.script;
+package com.riversoft.core.script;
 
 /**
  * @author Borball
@@ -13,20 +13,22 @@ public class ExpressionAndScriptExecutors {
 
     private ExprLangExecutor elExecutor;
     private ScriptExecutor groovyExecutor;
-    private ScriptExecutor jsr223Executor;
-    
+    private ScriptExecutor javaScriptExecutor;
+
     public Object evaluateEL(String el, ScriptExecutionContext context) {
         return elExecutor.evaluateEL(el, context);
     }
 
     public Object evaluateScript(ScriptType scriptType, String script, ScriptExecutionContext context) {
         switch (scriptType) {
-        case JSR223:
-            return jsr223Executor.evaluateScript(script, context);
+        case EL:
+            return elExecutor.evaluateEL(script, context);
         case GROOVY:
             return groovyExecutor.evaluateScript(script, context);
+        case JAVASCRIPT:
+            return javaScriptExecutor.evaluateScript(script, context);
         default:
-            return jsr223Executor.evaluateScript(script, context);
+            return groovyExecutor.evaluateScript(script, context);
         }
 
     }
@@ -39,7 +41,7 @@ public class ExpressionAndScriptExecutors {
         this.groovyExecutor = groovyExecutor;
     }
 
-    public void setJsr223Executor(ScriptExecutor jsr223Executor) {
-        this.jsr223Executor = jsr223Executor;
+    public void setJavaScriptExecutor(ScriptExecutor javaScriptExecutor) {
+        this.javaScriptExecutor = javaScriptExecutor;
     }
 }

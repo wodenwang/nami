@@ -3,7 +3,7 @@
  * $Id: $
  * Copyright (c) 2012 by Riversoft System, all rights reserved.
  */
-package com.riversoft.script;
+package com.riversoft.core.script;
  
 /**
  * @author Borball
@@ -11,6 +11,6 @@ package com.riversoft.script;
  */
 public enum ScriptType {
     
-    JSR223,GROOVY;
+    JAVASCRIPT, GROOVY, EL;
 
 }

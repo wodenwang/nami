@@ -1,7 +1,7 @@
-package com.riversoft.script.function;
+package com.riversoft.core.script.function;
 
 import com.jayway.restassured.specification.RequestSpecification;
-import com.riversoft.script.annotation.ScriptSupport;
+import com.riversoft.core.script.annotation.ScriptSupport;
 
 /**
  * Created by exizhai on 2/16/2016.

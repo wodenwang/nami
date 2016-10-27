@@ -3,6 +3,15 @@
   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
   <display-name>nami</display-name>
 
+  <!--初始化 -->
+  <servlet>
+    <description>系统初始化Servlet</description>
+    <display-name>InitServlet</display-name>
+    <servlet-name>InitServlet</servlet-name>
+    <servlet-class>com.riversoft.nami.web.InitServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+
   <session-config>
     <session-timeout>600</session-timeout>
   </session-config>

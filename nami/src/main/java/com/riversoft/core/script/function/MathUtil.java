@@ -3,9 +3,9 @@
  * $Id: $
  * Copyright (c) 2015 by Riversoft System, all rights reserved.
  */
-package com.riversoft.script.function;
+package com.riversoft.core.script.function;
 
-import com.riversoft.script.annotation.ScriptSupport;
+import com.riversoft.core.script.annotation.ScriptSupport;
 
 import java.math.BigDecimal;
 import java.util.Arrays;

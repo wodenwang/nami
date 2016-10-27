@@ -3,7 +3,7 @@
  * $Id: $
  * Copyright (c) 2013 by Riversoft System, all rights reserved.
  */
-package com.riversoft.exception;
+package com.riversoft.core.exception;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,48 +26,27 @@ public enum ExceptionType {
 	 */
 	WARN(1, "非异常"),
 
-	/**
-	 * 默认异常
-	 */
-	DEFAULT(9900, "系统未知异常。"),
-
-	/**
-	 * 编码校验异常
-	 */
-	CODING(9800, "编码异常。"),
+	DEFAULT(9999, "未知异常"),
 
 	/**
 	 * 上下文属性异常
 	 */
-	CONTEXT(300, "上下文属性异常。"),
-	CONTEXT_EMPTY(301, "属性不存在。"),
+	CONTEXT(100, "上下文属性异常。"),
+	CONTEXT_EMPTY(101, "属性不存在。"),
 
 	/**
 	 * 脚本执行属性异常
 	 */
-	SCRIPT(400, "脚本执行异常。"),
-	SCRIPT_ATTRIBUTE_EMPTY(401, "属性不存在。"),
-	SCRIPT_METHOD_EMPTY(402, "方法不存在。"),
-	SCRIPT_COMPILE_ERROR(403, "脚本编译出错。"),
-	SCRIPT_BUSI(404, "脚本业务异常。"),
-
-	/**
-	 * 配置类异常
-	 */
-	CONFIG(500, "数据配置出错。"),
-	CONFIG_WIDGET(501, "Form组件配置出错。"),
-
-	/**
-	 * 数据格式化异常
-	 */
-	FORMAT(600, "数据格式化异常。"),
-	FORMAT_NUMBER(601, "数字转换出错。", NumberFormatException.class),
-
+	SCRIPT(200, "脚本执行异常。"),
+	SCRIPT_ATTRIBUTE_EMPTY(201, "属性不存在。"),
+	SCRIPT_METHOD_EMPTY(202, "方法不存在。"),
+	SCRIPT_COMPILE_ERROR(203, "脚本编译出错。"),
+	SCRIPT_BUSI(204, "脚本业务异常。"),
 
 	/**
 	 * 微信交互相关异常
 	 */
-	WX(1500, "微信交互相关异常."),
+	WX(300, "微信交互相关异常.")
 
 	/**/
 	;

@@ -3,7 +3,7 @@
  * $Id: $
  * Copyright (c) 2014 by Riversoft System, all rights reserved.
  */
-package com.riversoft.exception;
+package com.riversoft.core.exception;
 
 /**
  * 脚本异常
@@ -33,7 +33,7 @@ public class ScriptRuntimeException extends SystemRuntimeException {
 	}
 
 	/**
-	 * @param extMessage
+	 * @param script
 	 * @param e
 	 */
 	public ScriptRuntimeException(String script, Throwable e) {
