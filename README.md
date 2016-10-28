@@ -31,11 +31,17 @@ NAMI采用纯粹的JAVA语言开发，对微信官方API进行封装，内置动
 - 解压即可运行的容器式封装
 - 小程序文件上传下载体系封装
 
-## 开始使用(待补充)
-- 编译/下载
-- 启动
-- hello 小程序!
-- 进阶
+## 一个例子
+1. 前端发起一个request
+![](http://i.imgur.com/sR8eNp5.png)
+
+2. 启动NAMI后,在request目录中增加脚本
+![](http://i.imgur.com/5sfx7do.jpg)
+<br/>
+![](http://i.imgur.com/lzsNE7i.jpg)
+
+3. 前端回调结果
+![](http://i.imgur.com/qmy7wj2.png)
 
 ## 关于我们
 - woden
