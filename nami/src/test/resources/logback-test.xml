@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="com.riversoft" level="debug" />
+    <logger name="groovy.log" level="debug" />
+	<logger name="com.jolbox" level="info"/>
+		
+	<logger name="org.activiti" level="warn" />
+	<logger name="org.springframework" level="warn" />
+	<logger name="org.hibernate" level="warn" />
+
+	<logger name="org.jumpmind.db" level="debug" />
+	<logger name="org.apache.commons" level="warn" />
+	<logger name ="net.sf" level="warn" />
+	<logger name ="net.sourceforge" level="warn" />
+	<logger name ="freemarker" level="warn" />
+	<logger name ="org.quartz.core" level="warn" />
+
+	<root level="info">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>
