@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +30,6 @@ import com.riversoft.core.exception.ExceptionType;
 import com.riversoft.core.exception.SystemRuntimeException;
 import com.riversoft.core.script.ExpressionAndScriptExecutors;
 import com.riversoft.core.script.ExpressionAndScriptExecutors.ScriptValueObject;
-import com.riversoft.core.script.ScriptType;
 import com.riversoft.util.JsonMapper;
 
 import groovy.lang.GString;
@@ -131,17 +129,7 @@ public class ScriptRequestServlet extends HttpServlet {
 	 * @return
 	 */
 	private ScriptValueObject findScriptFromUrl(String requestUri) {
-		ScriptType type;
 		String path = StringUtils.substring(requestUri, "/request".length());
-		if (StringUtils.endsWith(path.toLowerCase(), ".js")) {
-			type = ScriptType.JAVASCRIPT;
-		} else if (StringUtils.endsWith(path.toLowerCase(), ".groovy")) {
-			type = ScriptType.GROOVY;
-		} else if (StringUtils.endsWith(path.toLowerCase(), ".el")) {
-			type = ScriptType.EL;
-		} else {
-			throw new SystemRuntimeException(ExceptionType.SCRIPT, "请求协议不合法");
-		}
 
 		File file = new File(Platform.getRequestPath(), path);
 		if (!file.exists()) {
@@ -149,7 +137,7 @@ public class ScriptRequestServlet extends HttpServlet {
 		}
 
 		try {
-			return new ScriptValueObject(type, FileUtils.readFileToString(file));
+			return new ScriptValueObject(file);
 		} catch (IOException e) {
 			logger.error("", e);
 			throw new SystemRuntimeException(ExceptionType.SCRIPT, "脚本[" + file.getAbsolutePath() + "]无法读取.", e);

@@ -5,15 +5,26 @@
  */
 package com.riversoft.core.script;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.riversoft.core.BeanFactory;
+import com.riversoft.core.exception.ExceptionType;
+import com.riversoft.core.exception.SystemRuntimeException;
 
 /**
  * @author Borball
  * 
  */
 public class ExpressionAndScriptExecutors {
+
+	static Logger logger = LoggerFactory.getLogger(ExpressionAndScriptExecutors.class);
 
 	/**
 	 * 获取实例
@@ -103,6 +114,19 @@ public class ExpressionAndScriptExecutors {
 		public ScriptValueObject(ScriptType type, String script) {
 			this.type = type;
 			this.script = script;
+		}
+
+		public ScriptValueObject(File scriptFile) throws IOException {
+			if (StringUtils.endsWith(scriptFile.getName().toLowerCase(), ".js")) {
+				type = ScriptType.JAVASCRIPT;
+			} else if (StringUtils.endsWith(scriptFile.getName().toLowerCase(), ".groovy")) {
+				type = ScriptType.GROOVY;
+			} else if (StringUtils.endsWith(scriptFile.getName().toLowerCase(), ".el")) {
+				type = ScriptType.EL;
+			} else {
+				throw new SystemRuntimeException(ExceptionType.SCRIPT, "请求协议不合法");
+			}
+			script = FileUtils.readFileToString(scriptFile);
 		}
 	}
 }

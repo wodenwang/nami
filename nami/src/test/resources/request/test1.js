@@ -1,8 +1,12 @@
-var a = 1;
+var a = request.getInteger("a");
+var b = request.getString("b");
 
-var b = {
-	a: a
-};
+var _fun = function() {
+	// 直接组装成对象返回
+	return {
+		a : a,
+		b : b
+	}
+}
 
-
-b;
+_fun();

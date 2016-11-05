@@ -29,7 +29,7 @@ public class FormatUtil {
 	 * @param date
 	 * @return
 	 */
-	public static String formatDate(Date date) {
+	public String formatDate(Date date) {
 		return Formatter.formatDate(date);
 	}
 
@@ -39,7 +39,7 @@ public class FormatUtil {
 	 * @param date
 	 * @return
 	 */
-	public static String formatDatetime(Date date) {
+	public String formatDatetime(Date date) {
 		return Formatter.formatDatetime(date);
 	}
 
@@ -50,7 +50,7 @@ public class FormatUtil {
 	 * @param pattern
 	 * @return
 	 */
-	public static String formatDatetime(Date date, String pattern) {
+	public String formatDatetime(Date date, String pattern) {
 		return Formatter.formatDatetime(date, pattern);
 	}
 
@@ -60,7 +60,7 @@ public class FormatUtil {
 	 * @param price
 	 * @return
 	 */
-	public static String formatChinesePrice(Number price) {
+	public String formatChinesePrice(Number price) {
 		if (price == null) {
 			return "";
 		}
@@ -79,7 +79,7 @@ public class FormatUtil {
 	 * @param pattern
 	 * @return
 	 */
-	public static String formatPrice(Number price, String pattern) {
+	public String formatPrice(Number price, String pattern) {
 		if (price == null) {
 			return "";
 		}
@@ -97,7 +97,7 @@ public class FormatUtil {
 	 * @param price
 	 * @return
 	 */
-	public static String formatPrice(Number price) {
+	public String formatPrice(Number price) {
 		if (price == null) {
 			return "";
 		}
@@ -115,7 +115,7 @@ public class FormatUtil {
 	 * @param num
 	 * @return
 	 */
-	public static String formatPercent(Number num) {
+	public String formatPercent(Number num) {
 		if (num == null) {
 			return "";
 		}
@@ -129,7 +129,7 @@ public class FormatUtil {
 	 * @param pattern
 	 * @return
 	 */
-	public static String formatNumber(Number num, String pattern) {
+	public String formatNumber(Number num, String pattern) {
 		return Formatter.formatNumber(num, pattern);
 	}
 
@@ -139,7 +139,7 @@ public class FormatUtil {
 	 * @param num
 	 * @return
 	 */
-	public static String formatNumber(Number num) {
+	public String formatNumber(Number num) {
 		return Formatter.formatNumber(num);
 	}
 
@@ -149,7 +149,7 @@ public class FormatUtil {
 	 * @param chinese
 	 * @return
 	 */
-	public static String formatPinyin(String chinese) {
+	public String formatPinyin(String chinese) {
 		return PinyinUtils.converterToFirstSpell(chinese);
 	}
 
@@ -159,7 +159,7 @@ public class FormatUtil {
 	 * @param chinese
 	 * @return
 	 */
-	public static String formatPinyinFull(String chinese) {
+	public String formatPinyinFull(String chinese) {
 		return PinyinUtils.converterToSpell(chinese);
 	}
 
@@ -169,7 +169,7 @@ public class FormatUtil {
 	 * @param o
 	 * @return
 	 */
-	public static String formatJson(Object o) {
+	public String formatJson(Object o) {
 		if (o == null) {
 			return "{}";
 		}
@@ -188,7 +188,7 @@ public class FormatUtil {
 	 * @param s
 	 * @return
 	 */
-	public static String formatDuring(Long s) {
+	public String formatDuring(Long s) {
 		return Formatter.formatDuring(s);
 	}
 
@@ -198,7 +198,7 @@ public class FormatUtil {
 	 * @param value
 	 * @return
 	 */
-	public static Object toJson(Object value) {
+	public Object toJson(Object value) {
 		// TODO:JSON
 		if (value instanceof String) {
 			return JsonMapper.defaultMapper().json2Map((String) value);
@@ -213,7 +213,7 @@ public class FormatUtil {
 	 * @param value
 	 * @return
 	 */
-	public static Date toDate(Object value) {
+	public Date toDate(Object value) {
 		if (value == null) {
 			return null;
 		}
@@ -233,7 +233,7 @@ public class FormatUtil {
 	 * @param value
 	 * @return
 	 */
-	public static Number toNumber(Object value) {
+	public Number toNumber(Object value) {
 		if (value == null || StringUtils.isEmpty(value.toString())) {
 			return null;
 		}

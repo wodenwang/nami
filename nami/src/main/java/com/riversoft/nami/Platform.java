@@ -22,16 +22,26 @@ public class Platform {
 
 	static Logger logger = LoggerFactory.getLogger(Platform.class);
 
-	private static File PATH_ROOT;
-	private static File PATH_CONFIG;
-	private static File PATH_REQUEST;
+	private static File PATH_ROOT;// 根路径
+	private static File PATH_CONFIG;// 配置
+	private static File PATH_REQUEST;// 请求
+	private static File PATH_FUNCTION;// 函数文件夹
+
+	/**
+	 * 函数目录
+	 * 
+	 * @return
+	 */
+	static File getFunctionPath() {
+		return PATH_FUNCTION;
+	}
 
 	/**
 	 * 请求目录
 	 * 
 	 * @return
 	 */
-	public static File getRequestPath() {
+	static File getRequestPath() {
 		return PATH_REQUEST;
 	}
 
@@ -40,7 +50,7 @@ public class Platform {
 	 * 
 	 * @return
 	 */
-	public static File getRootPath() {
+	static File getRootPath() {
 		return PATH_ROOT;
 	}
 
@@ -71,6 +81,11 @@ public class Platform {
 		PATH_REQUEST = new File(PATH_ROOT, "request");
 		if (!PATH_REQUEST.exists()) {
 			PATH_REQUEST.mkdirs();
+		}
+
+		PATH_FUNCTION = new File(PATH_ROOT, "function");
+		if (!PATH_FUNCTION.exists()) {
+			PATH_FUNCTION.mkdirs();
 		}
 	}
 
