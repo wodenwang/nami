@@ -34,6 +34,8 @@ import com.riversoft.core.script.ExpressionAndScriptExecutors.ScriptValueObject;
 import com.riversoft.core.script.ScriptType;
 import com.riversoft.util.JsonMapper;
 
+import groovy.lang.GString;
+
 /**
  * 脚本路由
  * 
@@ -72,7 +74,13 @@ public class ScriptRequestServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
-		out.println(JsonMapper.defaultMapper().toJson(result));
+		if (result == null || StringUtils.isEmpty(result.toString())) {// 空,则表示成功但无返回
+			out.println("{msg:'处理成功',code:0}");
+		} else if (result instanceof String || result instanceof GString) {// 字符串,直接转换
+			out.println(result.toString());
+		} else {
+			out.println(JsonMapper.defaultMapper().toJson(result));
+		}
 		out.flush();
 		out.close();
 	}
