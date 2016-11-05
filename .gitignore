@@ -21,3 +21,7 @@ buildNumber.properties
 .project
 .classpath
 .settings/
+
+
+package/src/main/package/appserver/tomcat
+package/src/main/package/nami
