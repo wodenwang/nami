@@ -136,6 +136,7 @@
               <goal>single</goal>
             </goals>
             <configuration>
+              <finalName>nami-pack</finalName>
               <descriptors>
                 <descriptor>src/main/assembly/assembly.xml</descriptor>
               </descriptors>
