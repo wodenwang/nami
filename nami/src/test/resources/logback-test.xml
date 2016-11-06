@@ -9,18 +9,13 @@
 
 	<logger name="com.riversoft" level="debug" />
     <logger name="groovy.log" level="debug" />
-	<logger name="com.jolbox" level="info"/>
-		
-	<logger name="org.activiti" level="warn" />
+
 	<logger name="org.springframework" level="warn" />
 	<logger name="org.hibernate" level="warn" />
 
-	<logger name="org.jumpmind.db" level="debug" />
 	<logger name="org.apache.commons" level="warn" />
 	<logger name ="net.sf" level="warn" />
 	<logger name ="net.sourceforge" level="warn" />
-	<logger name ="freemarker" level="warn" />
-	<logger name ="org.quartz.core" level="warn" />
 
 	<root level="info">
 		<appender-ref ref="STDOUT" />
