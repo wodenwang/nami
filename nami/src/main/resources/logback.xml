@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+
+    <property resource="log.properties" />
+
+	<appender name="NAMI" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<append>true</append>
+		<file>log/nami.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>log/nami-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+
+			<timeBasedFileNamingAndTriggeringPolicy	class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>${log.keepdays}</maxHistory>
+		</rollingPolicy>
+   
+		<encoder>   
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} [%line] - %msg%n</pattern>
+			<charset>${log.encoding}</charset>
+		</encoder>
+
+	</appender>
+
+	<appender name="SCRIPT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<append>true</append>
+		<file>log/script.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>log/script-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+
+			<timeBasedFileNamingAndTriggeringPolicy	class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>${log.keepdays}</maxHistory>
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} [%line] - %msg%n</pattern>
+			<charset>${log.encoding}</charset>
+		</encoder>
+
+	</appender>
+
+	<logger name="com.riversoft" level="${log.level}"/>
+
+	<logger name="script.log" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="SCRIPT"/>
+	</logger>
+
+	<logger name="org.springframework" level="${log.3pp.level}" />
+	<logger name="org.apache.commons" level="${log.3pp.level}" />
+	<logger name ="net.sf" level="${log.3pp.level}" />
+	<logger name ="net.sourceforge" level="${log.3pp.level}" />
+
+	<root level="info">
+		<appender-ref ref="NAMI" />
+	</root>
+</configuration>
