@@ -23,9 +23,7 @@ import com.riversoft.core.script.ScriptExecutor;
  * 
  */
 public class JexlEngine implements ScriptExecutor, ExprLangExecutor {
-	/**
-	 * Logger for this class
-	 */
+
 	private static final Logger logger = LoggerFactory.getLogger(JexlEngine.class);
 
 	private org.apache.commons.jexl2.JexlEngine engine;

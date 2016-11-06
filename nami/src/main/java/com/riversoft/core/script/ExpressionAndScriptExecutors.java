@@ -5,41 +5,32 @@
  */
 package com.riversoft.core.script;
 
+import com.riversoft.core.BeanFactory;
+import com.riversoft.core.exception.ExceptionType;
+import com.riversoft.core.exception.SystemRuntimeException;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.riversoft.core.BeanFactory;
-import com.riversoft.core.exception.ExceptionType;
-import com.riversoft.core.exception.SystemRuntimeException;
-
 /**
  * @author Borball
- * 
+ *
  */
 public class ExpressionAndScriptExecutors {
 
-	static Logger logger = LoggerFactory.getLogger(ExpressionAndScriptExecutors.class);
+	private ExprLangExecutor elExecutor;
+	private ScriptExecutor groovyExecutor;
+	private ScriptExecutor javaScriptExecutor;
+	private ScriptExecutor jsr223Executor;
 
-	/**
-	 * 获取实例
-	 * 
-	 * @return
-	 */
 	public static ExpressionAndScriptExecutors getInstance() {
 		ExpressionAndScriptExecutors executors = (ExpressionAndScriptExecutors) BeanFactory.getInstance()
 				.getBean("expressionAndScriptExecutors");
 		return executors;
 	}
-
-	private ExprLangExecutor elExecutor;
-	private ScriptExecutor groovyExecutor;
-	private ScriptExecutor javaScriptExecutor;
 
 	public Object evaluateEL(String el, ScriptExecutionContext context) {
 		return elExecutor.evaluateEL(el, context);
@@ -47,7 +38,7 @@ public class ExpressionAndScriptExecutors {
 
 	/**
 	 * 执行脚本
-	 * 
+	 *
 	 * @param scriptValueObject
 	 * @return
 	 */
@@ -57,7 +48,7 @@ public class ExpressionAndScriptExecutors {
 
 	/**
 	 * 执行脚本
-	 * 
+	 *
 	 * @param scriptValueObject
 	 * @param context
 	 * @return
@@ -67,24 +58,16 @@ public class ExpressionAndScriptExecutors {
 				new BasicScriptExecutionContext(context));
 	}
 
-	/**
-	 * 执行脚本
-	 * 
-	 * @param scriptType
-	 * @param script
-	 * @param context
-	 * @return
-	 */
 	public Object evaluateScript(ScriptType scriptType, String script, ScriptExecutionContext context) {
 		switch (scriptType) {
-		case EL:
-			return elExecutor.evaluateEL(script, context);
-		case GROOVY:
-			return groovyExecutor.evaluateScript(script, context);
-		case JAVASCRIPT:
-			return javaScriptExecutor.evaluateScript(script, context);
-		default:
-			return groovyExecutor.evaluateScript(script, context);
+			case JSR223:
+				return jsr223Executor.evaluateScript(script, context);
+			case GROOVY:
+				return groovyExecutor.evaluateScript(script, context);
+			case JAVASCRIPT:
+				return javaScriptExecutor.evaluateScript(script, context);
+			default:
+				return jsr223Executor.evaluateScript(script, context);
 		}
 
 	}
@@ -97,13 +80,17 @@ public class ExpressionAndScriptExecutors {
 		this.groovyExecutor = groovyExecutor;
 	}
 
+	public void setJsr223Executor(ScriptExecutor jsr223Executor) {
+		this.jsr223Executor = jsr223Executor;
+	}
+
 	public void setJavaScriptExecutor(ScriptExecutor javaScriptExecutor) {
 		this.javaScriptExecutor = javaScriptExecutor;
 	}
 
 	/**
 	 * 解析脚本内容
-	 * 
+	 *
 	 * @author woden
 	 *
 	 */
@@ -122,7 +109,7 @@ public class ExpressionAndScriptExecutors {
 			} else if (StringUtils.endsWith(scriptFile.getName().toLowerCase(), ".groovy")) {
 				type = ScriptType.GROOVY;
 			} else if (StringUtils.endsWith(scriptFile.getName().toLowerCase(), ".el")) {
-				type = ScriptType.EL;
+				type = ScriptType.JSR223;
 			} else {
 				throw new SystemRuntimeException(ExceptionType.SCRIPT, "请求协议不合法");
 			}

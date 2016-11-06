@@ -5,14 +5,15 @@
 	   default-init-method="init">
 
 	<bean name="expressionAndScriptExecutors" class="com.riversoft.core.script.ExpressionAndScriptExecutors">
-		<property name="elExecutor" ref="jsr223Engine" />
+		<property name="elExecutor" ref="jexlEngine" />
 		<property name="groovyExecutor" ref="groovyExecutor" />
 		<property name="javaScriptExecutor" ref="javaScriptExecutor" />
-	</bean>
+		<property name="jsr223Executor" ref="jexlEngine"/>
+ 	</bean>
 
 	<bean name="exprlangAnnotationScanner" class="com.riversoft.core.script.ExprlangAnnotationScanner" />
 
-	<bean name="jsr223Engine" class="com.riversoft.core.script.impl.JexlEngine">
+	<bean name="jexlEngine" class="com.riversoft.core.script.impl.JexlEngine">
 		<property name="cacheSize" value="200" />
 		<property name="lenient" value="false" />
 		<property name="exprlangAnnotationScanner" ref="exprlangAnnotationScanner" />

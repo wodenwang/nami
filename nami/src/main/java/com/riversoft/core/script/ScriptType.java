@@ -11,6 +11,6 @@ package com.riversoft.core.script;
  */
 public enum ScriptType {
     
-    JAVASCRIPT, GROOVY, EL;
+    JAVASCRIPT, GROOVY, JSR223;
 
 }

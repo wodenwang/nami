@@ -31,6 +31,7 @@
         <weixin-sdk.version>0.8.8</weixin-sdk.version>
         <groovy.version>2.4.7</groovy.version>
         <slf4j.version>1.7.21</slf4j.version>
+        <logback.version>1.1.7</logback.version>
 		<jackson.version>2.8.4</jackson.version>
 		<junit.version>4.12</junit.version>
     </properties>
@@ -176,17 +177,47 @@
                 <version>${pinyin4j.version}</version>
             </dependency>
 
+            <!-- LOGGING begin -->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-simple</artifactId>
                 <version>${slf4j.version}</version>
                 <scope>test</scope>
             </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>log4j-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jul-to-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <!-- logging end -->
 
             <dependency>
                 <groupId>junit</groupId>
