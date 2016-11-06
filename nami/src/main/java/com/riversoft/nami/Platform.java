@@ -23,7 +23,6 @@ public class Platform {
 	static Logger logger = LoggerFactory.getLogger(Platform.class);
 
 	private static File PATH_ROOT;// 根路径
-	private static File PATH_CONFIG;// 配置
 	private static File PATH_REQUEST;// 请求
 	private static File PATH_FUNCTION;// 函数文件夹
 
@@ -72,11 +71,6 @@ public class Platform {
 			PATH_ROOT = new File(initFileUrl.getFile()).getParentFile();
 		}
 		logger.info("NAMI平台根目录初始化成功:{}", PATH_ROOT);
-
-		PATH_CONFIG = new File(PATH_ROOT, "config");
-		if (!PATH_CONFIG.exists()) {
-			PATH_CONFIG.mkdirs();
-		}
 
 		PATH_REQUEST = new File(PATH_ROOT, "request");
 		if (!PATH_REQUEST.exists()) {

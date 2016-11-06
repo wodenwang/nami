@@ -9,5 +9,6 @@
 	</bean>
 
 	<import resource="applicationContext-scripts.xml" />
+	<import resource="applicationContext-database.xml" />
 
 </beans>
