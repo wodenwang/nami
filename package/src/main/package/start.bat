@@ -1,13 +1,13 @@
 @echo off
-title NAMI Tools 服务器管理工具
+title NAMI Server Management
 color 0a
 
 set PWD=%~dp0
 set INSTALLATION_DIR=%PWD%
 
 echo *********************************************************
-echo ******************** NAMI Tools (C)(R) ******************
-echo **********************  服务器管理工具  *******************
+echo ****************  NAMI Server Management  ***************
+echo ****************  Born for Weixin Applet  ***************
 echo *********************************************************
 echo.
 	

@@ -1,14 +1,13 @@
 @echo off
-
-title NAMI Tools 服务器管理工具
+title NAMI Server Management
 color 0a
 
 set PWD=%~dp0
 set INSTALLATION_DIR=%PWD%
 
 echo *********************************************************
-echo ******************** NAMI Tools (C)(R) ******************
-echo **********************  服务器管理工具  *******************
+echo ****************  NAMI Server Management  ***************
+echo ****************  Born for Weixin Applet  ***************
 echo *********************************************************
 echo.
 
@@ -16,6 +15,7 @@ set CATALINA_HOME=%INSTALLATION_DIR%appserver\tomcat
 
 set CATALINA_BASE=%INSTALLATION_DIR%appserver\CATALINA_BASE
 
+echo JAVA_HOME:		%JAVA_HOME%
 echo CATALINA_BASE: %CATALINA_BASE%
 echo CATALINA_HOME: %CATALINA_HOME%
 
