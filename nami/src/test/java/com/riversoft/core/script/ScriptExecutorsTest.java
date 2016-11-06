@@ -185,4 +185,8 @@ public class ScriptExecutorsTest {
 		Assert.assertEquals(date.getTime(), now);
 	}
 
+	@Test
+	public void testBasicJavaScript() {
+		//TODO:test javaScript
+	}
 }
