@@ -7,7 +7,7 @@ set INSTALLATION_DIR=%PWD%
 
 echo *********************************************************
 echo ****************  NAMI Server Management  ***************
-echo ****************  Born for Weixin Applet  ***************
+echo ****************  Born for Wechat Applet  ***************
 echo *********************************************************
 echo.
 	
