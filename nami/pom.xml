@@ -132,7 +132,7 @@
 
 		<dependency>
 			<groupId>cn.com.riversoft</groupId>
-			<artifactId>weixin-mp</artifactId>
+			<artifactId>weixin-app</artifactId>
 		</dependency>
 
 		<!-- servlet -->

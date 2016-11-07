@@ -125,7 +125,7 @@ public class ScriptRequestServlet extends HttpServlet {
 	 * 获取脚本文件内容<br>
 	 * 开发模式不考虑缓存
 	 * 
-	 * @param servletPath
+	 * @param requestUri
 	 * @return
 	 */
 	private ScriptValueObject findScriptFromUrl(String requestUri) {

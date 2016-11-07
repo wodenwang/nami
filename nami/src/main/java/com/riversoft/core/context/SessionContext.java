@@ -22,7 +22,7 @@ public class SessionContext extends BaseContext {
 	private HttpSession session;
 
 	/**
-	 * @param request
+	 * @param session
 	 * @param params
 	 */
 	protected SessionContext(HttpSession session, Map<String, ?> params) {
