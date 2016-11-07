@@ -84,7 +84,7 @@ printRunning(){
 # 输出Tomcat没有，试图启动Tomcat
 printNotRunTryStart(){
     printColor
-    echo "BPMT Tomcat is not running, trying start BPMT Tomcat."
+    echo "NAMI Tomcat is not running, trying start BPMT Tomcat."
 	echo
 }
 
