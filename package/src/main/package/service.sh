@@ -40,43 +40,44 @@ fi
 
 # 获取PID函数
 getPID(){
-	PID=$(ps -ef | grep -v 'grep' | grep "${RIVER_CATALINA_BASE}/conf/logging.properties" | awk '{print $2}')
+	PID=$(ps -ef | grep -v 'grep' | grep "${NAMI_CATALINA_BASE}/conf/logging.properties" | awk '{print $2}')
 }
 
 # 得到端口
 getPort(){
-    PORT=`cat ${RIVER_CATALINA_BASE}/conf/server.xml | awk '/HTTP\/1.1/ {print $2}' | cut -d'"' -f2`
+    PORT=`cat ${NAMI_CATALINA_BASE}/conf/server.xml | awk '/HTTP\/1.1/ {print $2}' | cut -d'"' -f2`
 }
 
 # 输出颜色
 printColor(){
     echo -ne 		     "*********************************************************\n"
-	echo -ne "${FONTCOLOR}****************** BPMT Tools Co.,Ltd ®©  ***************${END}\n"
+	echo -ne "${FONTCOLOR}****************** NAMI Server Management  **************${END}\n"
+	echo -ne "${FONTCOLOR}****************** Born for Wechat Applet  **************${END}\n"
 	echo -ne 			 "*********************************************************\n"
 	echo
 }
 # 输出正在启动Tomcat
 printStart(){
     printColor
-    echo -n "BPMT Tomcat is starting please wait ..."
+    echo -n "NAMI Tomcat is starting please wait ..."
 	echo
 }
 # 输出正在停止Tomcat
 printStop(){
     printColor
-    echo "BPMT Tomcat is stopping,please wait ..."
+    echo "NAMI Tomcat is stopping,please wait ..."
 	echo
 }
 # 输出Tomcat没有运行
 printNotRun(){
     printColor
-    echo "BPMT Tomcat is not running..."
+    echo "NAMI Tomcat is not running..."
 	echo
 }
 # 输出Tomcat正在运行
 printRunning(){
     printColor
-    echo "BPMT Tomcat is running... PID: ${PID}"
+    echo "NAMI Tomcat is running... PID: ${PID}"
 	echo
 }
 
