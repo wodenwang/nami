@@ -56,6 +56,9 @@ NAMI**也可以成为你JAVA项目的其中一个开源独立JAR包**，帮你�
 3. 前端回调结果
 ![](http://i.imgur.com/qmy7wj2.png)
 
+## 系列文章
+- [NAMI来了！第一个NAMI小程序Hello World！(含视频)](http://mp.weixin.qq.com/s?__biz=MzI2MDE0MjA5MQ==&mid=2247483828&idx=1&sn=cf997d92abd1783b5746bc6ac5afe646&chksm=ea6f64d0dd18edc61b4fcc158c91c342b4ad75891bb083dabc2777946808157da56e3846790a&scene=18#wechat_redirect)
+
 ## 关于我们
 - woden
 <br/>
