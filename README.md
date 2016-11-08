@@ -46,15 +46,60 @@ NAMI**也可以成为你JAVA项目的其中一个开源独立JAR包**，帮你�
 
 ## 一个例子
 1. 前端发起一个request
-![](http://i.imgur.com/sR8eNp5.png)
+![](http://i.imgur.com/j1qXYf7.png)
+前端源码：
+
+```javascript
+    //==================NAMI HELLO WORLD begin =================
+    //第一个NAMI小程序调用
+    wx.request({
+      url: 'http://localhost:8080/request/hello.js',
+      data: {
+        a : 'hello',
+        b : 2
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {}, // 设置请求的 header
+      success: function(res){
+        // success
+      },
+      fail: function() {
+        // fail
+      },
+      complete: function(res) {
+        // complete
+        console.log("调用完成");
+        console.log(res.data);
+      }
+    })
+    //==================NAMI HELLO WORLD end =================
+```
 
 2. 启动NAMI后,在request目录中增加脚本
-![](http://i.imgur.com/5sfx7do.jpg)
+![](http://i.imgur.com/MCEv7r4.png)
 <br/>
-![](http://i.imgur.com/lzsNE7i.jpg)
+![](http://i.imgur.com/HTvnQMU.png)
+<br/>
+后端源码：
+
+```javascript
+//definde
+function main() {
+	var a = request.getString("a") || 'none';
+	var b = request.getInteger("b") || 0;
+
+	return {
+		a : a,
+		b : b
+	}
+}
+
+// invoke
+main();
+```
 
 3. 前端回调结果
-![](http://i.imgur.com/qmy7wj2.png)
+![](http://i.imgur.com/29RPWnK.png)
 
 ## 系列文章
 - [NAMI来了！第一个NAMI小程序Hello World！(含视频)](http://mp.weixin.qq.com/s?__biz=MzI2MDE0MjA5MQ==&mid=2247483828&idx=1&sn=cf997d92abd1783b5746bc6ac5afe646&chksm=ea6f64d0dd18edc61b4fcc158c91c342b4ad75891bb083dabc2777946808157da56e3846790a&scene=18#wechat_redirect)
