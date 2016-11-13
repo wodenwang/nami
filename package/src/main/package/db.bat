@@ -13,5 +13,5 @@ echo.
 	
 echo JAVA_HOME:		%JAVA_HOME%
 
-@java -cp "%INSTALLATION_DIR%nami\WEB-INF\lib\h2.jar;%CLASSPATH%" org.h2.tools.Console -url jdbc:h2:./database/nami -driver org.h2.Driver -user sa %*
+@java -cp "%INSTALLATION_DIR%nami\WEB-INF\lib\h2.jar;%CLASSPATH%" org.h2.tools.Console -url jdbc:h2:./database/nami;AUTO_SERVER=TRUE;MVCC=TRUE -driver org.h2.Driver -user sa %*
 @if errorlevel 1 pause
