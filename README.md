@@ -105,6 +105,7 @@ main();
 
 ## 系列文章
 - [NAMI来了！第一个NAMI小程序Hello World！(含视频)](http://mp.weixin.qq.com/s?__biz=MzI2MDE0MjA5MQ==&mid=2247483828&idx=1&sn=cf997d92abd1783b5746bc6ac5afe646&chksm=ea6f64d0dd18edc61b4fcc158c91c342b4ad75891bb083dabc2777946808157da56e3846790a&scene=18#wechat_redirect)
+- [NAMI来了！五分钟让微信小程序接上数据库（含视频）](http://mp.weixin.qq.com/s?__biz=MzI2MDE0MjA5MQ==&mid=2247483854&idx=1&sn=5c80bf25dbbbc7637c758929bf5d237d&chksm=ea6f64aadd18edbc6bf84be857711886f072d01c5bd07804befeb77e82e7283569187c1fb178#rd)
 
 ## 关于我们
 - woden
