@@ -17,14 +17,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.riversoft.core.context.RequestContext;
-import com.riversoft.core.context.SessionContext;
 import com.riversoft.core.context.VariableContext;
 import com.riversoft.core.exception.ExceptionType;
 import com.riversoft.core.exception.SystemRuntimeException;
@@ -63,9 +61,8 @@ public class ScriptRequestServlet extends HttpServlet {
 		} catch (SystemRuntimeException e) {
 			Map<String, Object> errResult = new HashMap<>();
 			errResult.put("msg", e.getExtMessage());
-			errResult.put("code", e.getType().getCode());
 			result = errResult;
-			response.setStatus(500);
+			response.setStatus(299);// 299表示NAMI业务逻辑错误;前端封转对状态码的判断
 		}
 
 		response.setContentType("application/json;charset=utf-8");
@@ -100,19 +97,6 @@ public class ScriptRequestServlet extends HttpServlet {
 				params.put(name, request.getParameterValues(name));
 			}
 			RequestContext.init(request, params);// 设置
-		}
-
-		// 设置session
-		{
-			HttpSession session = request.getSession();
-			Enumeration<String> names = session.getAttributeNames();
-			Map<String, Object> params = new HashMap<>();
-			while (names.hasMoreElements()) {
-				String name = names.nextElement();
-				// logger.debug("当前会话数据[" + name + "]以设置入threadlocal.");
-				params.put(name, session.getAttribute(name));
-			}
-			SessionContext.init(session, params);
 		}
 
 		// 设置variable
