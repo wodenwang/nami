@@ -114,7 +114,7 @@ mvn clean install
 ```
 打包结果在/package/target/nami-package.zip
 
-## 关于我们
+## 开发团队
 - woden
 <br/>
 BPMT微信快速开发平台核心开发
@@ -128,3 +128,18 @@ BPMT微信快速开发平台核心开发
 开源项目微信JavaSDK([https://github.com/borball/weixin-sdk](https://github.com/borball/weixin-sdk "微信SDK"))发起人
 <br/>
 BPMT快速开发平台核心开发
+
+- 前端工程师招募（1名）
+	1. 负责NAMI小程序端（前端）框架封装；
+	2. 负责NAMI小程序端（前端）DEMO开发；
+	3. 可获得“生姜头”小程序账号开发者/体验者资格（一起尝鲜吧~）
+	4. 跟着NAMI项目一起到处活动
+	5. 有意向者可关注“全栈生姜头”公众号并发送留言
+
+
+- 测试工程师（1-2名）
+	1. 参与NAMI测试，设计test case；
+	2. 开发基于NAMI的各类DEMO；
+	3. 可获得“生姜头”小程序账号开发者/体验者资格（一起尝鲜吧~）
+	4. 跟着NAMI项目一起到处活动
+	5. 有意向者可关注“全栈生姜头”公众号并发送留言
