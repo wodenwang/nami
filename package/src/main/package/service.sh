@@ -7,10 +7,9 @@ BACKGROUD="\033[37m"                            # echo 时的 背景颜色
 FONTCOLOR="\033[33m"                            # echo 时的 字体颜色
 END="\033[0m"                                   # echo 时的 结束标志
 HOST="127.0.0.1"                                # 本机地址用于测试本机Tomcat是否已经启动完成
-STATUS="200 301 302"                            # 定义正常访问返回的状态码
+STATUS="200 301 302 404"                        # 定义正常访问返回的状态码
 SCRIPT_NAME=$0                                  # 脚本绝对路径
 START_STOP=$1                                   # 命令行第一个参数
-URI=/download/logo.png
 
 ROOT_DIR="$(cd "$(dirname "$0")" && pwd -P)"
 echo ${ROOT_DIR}
@@ -85,7 +84,7 @@ printRunning(){
 # 输出Tomcat没有，试图启动Tomcat
 printNotRunTryStart(){
     printColor
-    echo "NAMI Tomcat is not running, trying start BPMT Tomcat."
+    echo "NAMI Tomcat is not running, trying start NAMI Tomcat."
 	echo
 }
 
@@ -104,7 +103,7 @@ sleepFun(){
 # 测试端口是否可以正常访问
 testPortIsOk(){
     PORT_OK=1
-    status=`/usr/bin/curl -I $1 2>/dev/null | head -1 | cut -d" " -f2`
+    status=`/usr/bin/curl -I $1 2>/dev/null | head -1 | cut -d" k" -f2`
     for i in $STATUS; do
         if [[ ${i} == ${status} ]]; then
             PORT_OK=0
