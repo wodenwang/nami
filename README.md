@@ -1,9 +1,9 @@
 # NAMI：专为微信小程序服务端开发而生
-*面向前端开发人员的傻瓜式后端服务框架*
+*面向前端开发人员的后端逻辑中间件*
 
 ## 什么是NAMI
 微信小程序的前端框架，官方命名为MINA；那我们的非官方后端就呼应一下，姑且命名为NAMI（纳米）。<br/>
-NAMI提供了开发一个小程序服务端所需的**所有**服务，**包括但不仅限于处理request请求、接收和处理websocket、与微信服务端交互并维护access_token、处理微信服务端登录鉴权、发送模板消息、接收微信支付事件**，等等。<br/>
+NAMI提供了一个小程序服务端所需**所有**服务的支持，**包括但不仅限于处理request请求、接收和处理websocket、与微信服务端交互并维护access_token、处理微信服务端登录鉴权、发送模板消息、接收微信支付事件**，等等。<br/>
 <br/>
 对于小应用：你只需要找一台电脑（无论windows、mac还是linux），一台云虚拟机，甚至一个docker实例，就可以安装NAMI；NAMI提供了一整套完整的小程序后端解决方案，替你包揽有关小程序后端开发的所有问题。<br/>
 <br/>
@@ -107,7 +107,14 @@ main();
 - [NAMI来了！第一个NAMI小程序Hello World！(含视频)](http://mp.weixin.qq.com/s?__biz=MzI2MDE0MjA5MQ==&mid=2247483828&idx=1&sn=cf997d92abd1783b5746bc6ac5afe646&chksm=ea6f64d0dd18edc61b4fcc158c91c342b4ad75891bb083dabc2777946808157da56e3846790a&scene=18#wechat_redirect)
 - [NAMI来了！五分钟让微信小程序接上数据库（含视频）](http://mp.weixin.qq.com/s?__biz=MzI2MDE0MjA5MQ==&mid=2247483854&idx=1&sn=5c80bf25dbbbc7637c758929bf5d237d&chksm=ea6f64aadd18edbc6bf84be857711886f072d01c5bd07804befeb77e82e7283569187c1fb178#rd)
 
-## 关于我们
+## 如何打包
+用maven构建，根目录执行：
+```
+mvn clean install
+```
+打包结果在/package/target/nami-package.zip
+
+## 开发团队
 - woden
 <br/>
 BPMT微信快速开发平台核心开发
@@ -121,3 +128,25 @@ BPMT微信快速开发平台核心开发
 开源项目微信JavaSDK([https://github.com/borball/weixin-sdk](https://github.com/borball/weixin-sdk "微信SDK"))发起人
 <br/>
 BPMT快速开发平台核心开发
+
+
+
+
+## 团队招募
+> 有意向者可在“全栈生姜头”公众号留言，也可以邮件给我（github资料有邮箱地址）
+> 支持（欢迎）远程开发，直接在github上面开发；
+> 磨合期先自己fork项目然后push request给我；
+> 磨合期之后我会添加到collaborators；
+
+1. 前端工程师招募（1-2名）
+	1. 负责NAMI小程序端（前端）框架封装；
+	2. 负责NAMI小程序端（前端）DEMO开发；
+	3. 可获得“生姜头”小程序账号开发者/体验者资格（一起尝鲜吧~）；
+	4. 跟着NAMI项目一起到处活动；
+
+2. 测试工程师（1-2名）
+	1. 参与NAMI测试，设计test case；
+	2. 开发基于NAMI的各类DEMO；
+	3. 可获得“生姜头”小程序账号开发者/体验者资格（一起尝鲜吧~）；
+	4. 跟着NAMI项目一起到处活动；
+

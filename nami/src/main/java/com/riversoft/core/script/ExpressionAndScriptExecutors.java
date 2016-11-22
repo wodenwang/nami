@@ -5,15 +5,16 @@
  */
 package com.riversoft.core.script;
 
-import com.riversoft.core.BeanFactory;
-import com.riversoft.core.exception.ExceptionType;
-import com.riversoft.core.exception.SystemRuntimeException;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import com.riversoft.core.BeanFactory;
+import com.riversoft.core.exception.ExceptionType;
+import com.riversoft.core.exception.SystemRuntimeException;
 
 /**
  * @author Borball
@@ -60,14 +61,14 @@ public class ExpressionAndScriptExecutors {
 
 	public Object evaluateScript(ScriptType scriptType, String script, ScriptExecutionContext context) {
 		switch (scriptType) {
-			case JSR223:
-				return jsr223Executor.evaluateScript(script, context);
-			case GROOVY:
-				return groovyExecutor.evaluateScript(script, context);
-			case JAVASCRIPT:
-				return javaScriptExecutor.evaluateScript(script, context);
-			default:
-				return jsr223Executor.evaluateScript(script, context);
+		case JSR223:
+			return jsr223Executor.evaluateScript(script, context);
+		case GROOVY:
+			return groovyExecutor.evaluateScript(script, context);
+		case JAVASCRIPT:
+			return javaScriptExecutor.evaluateScript(script, context);
+		default:
+			return jsr223Executor.evaluateScript(script, context);
 		}
 
 	}
@@ -113,7 +114,7 @@ public class ExpressionAndScriptExecutors {
 			} else {
 				throw new SystemRuntimeException(ExceptionType.SCRIPT, "请求协议不合法");
 			}
-			script = FileUtils.readFileToString(scriptFile);
+			script = FileUtils.readFileToString(scriptFile, "UTF-8");
 		}
 	}
 }

@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.riversoft.core.context.RequestContext;
-import com.riversoft.core.context.SessionContext;
 import com.riversoft.core.context.VariableContext;
 
 /**
@@ -24,7 +23,6 @@ public class BasicScriptExecutionContext implements ScriptExecutionContext {
 	public BasicScriptExecutionContext(Map<String, Object> extra) {
 		variables = new HashMap<String, Object>();
 		variables.put(ContextKeys.REQUEST.key, RequestContext.getCurrent());
-		variables.put(ContextKeys.SESSION.key, SessionContext.getCurrent());
 		variables.put(ContextKeys.VARIABLE.key, VariableContext.getCurrent());
 		variables.put(ContextKeys.NOW.key, new Date());
 		if (extra != null) {
