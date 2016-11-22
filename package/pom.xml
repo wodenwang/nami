@@ -82,7 +82,7 @@
               </artifactItems>
             </configuration>
           </execution>
-
+	  
           <execution>
             <id>copy-unzip-nami</id>
             <phase>process-resources</phase>
@@ -136,9 +136,61 @@
               <goal>single</goal>
             </goals>
             <configuration>
-              <finalName>nami-pack</finalName>
+              <finalName>nami-pack-nojdk</finalName>
               <descriptors>
-                <descriptor>src/main/assembly/assembly.xml</descriptor>
+                <descriptor>src/main/assembly/assembly-nojdk.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+          <execution>
+            <id>make-win32-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <finalName>nami-pack-win32</finalName>
+              <descriptors>
+                <descriptor>src/main/assembly/assembly-win32.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+		  <execution>
+            <id>make-win64-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <finalName>nami-pack-win64</finalName>
+              <descriptors>
+                <descriptor>src/main/assembly/assembly-win64.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+          <execution>
+            <id>make-linux32-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <finalName>nami-pack-linux32</finalName>
+              <descriptors>
+                <descriptor>src/main/assembly/assembly-linux32.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+		  <execution>
+            <id>make-linux64-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <finalName>nami-pack-linux64</finalName>
+              <descriptors>
+                <descriptor>src/main/assembly/assembly-linux64.xml</descriptor>
               </descriptors>
             </configuration>
           </execution>

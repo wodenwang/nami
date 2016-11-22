@@ -5,6 +5,8 @@ color 0a
 set PWD=%~dp0
 set INSTALLATION_DIR=%PWD%
 
+call %INSTALLATION_DIR%\java\set_env.bat
+
 echo *********************************************************
 echo ****************  NAMI Server Management  ***************
 echo ****************  Born for Wechat Applet  ***************
