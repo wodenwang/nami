@@ -103,7 +103,7 @@ sleepFun(){
 # 测试端口是否可以正常访问
 testPortIsOk(){
     PORT_OK=1
-    status=`/usr/bin/curl -I $1 2>/dev/null | head -1 | cut -d" k" -f2`
+    status=`/usr/bin/curl -I $1 2>/dev/null | head -1 | cut -d" " -f2`
     for i in $STATUS; do
         if [[ ${i} == ${status} ]]; then
             PORT_OK=0
