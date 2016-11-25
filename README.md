@@ -112,7 +112,7 @@ main();
 ```
 mvn clean install
 ```
-打包结果在/package/target/nami-package.zip
+打包结果在/package/target/nami-pack-<platform>.zip
 
 ## 开发团队
 - woden

@@ -136,7 +136,7 @@
               <goal>single</goal>
             </goals>
             <configuration>
-              <finalName>nami-pack-nojdk</finalName>
+              <finalName>nami-pack</finalName>
               <descriptors>
                 <descriptor>src/main/assembly/assembly-nojdk.xml</descriptor>
               </descriptors>
@@ -149,7 +149,7 @@
               <goal>single</goal>
             </goals>
             <configuration>
-              <finalName>nami-pack-win32</finalName>
+              <finalName>nami-pack</finalName>
               <descriptors>
                 <descriptor>src/main/assembly/assembly-win32.xml</descriptor>
               </descriptors>
@@ -162,7 +162,7 @@
               <goal>single</goal>
             </goals>
             <configuration>
-              <finalName>nami-pack-win64</finalName>
+              <finalName>nami-pack</finalName>
               <descriptors>
                 <descriptor>src/main/assembly/assembly-win64.xml</descriptor>
               </descriptors>
@@ -175,7 +175,7 @@
               <goal>single</goal>
             </goals>
             <configuration>
-              <finalName>nami-pack-linux32</finalName>
+              <finalName>nami-pack</finalName>
               <descriptors>
                 <descriptor>src/main/assembly/assembly-linux32.xml</descriptor>
               </descriptors>
@@ -188,7 +188,7 @@
               <goal>single</goal>
             </goals>
             <configuration>
-              <finalName>nami-pack-linux64</finalName>
+              <finalName>nami-pack</finalName>
               <descriptors>
                 <descriptor>src/main/assembly/assembly-linux64.xml</descriptor>
               </descriptors>
