@@ -26,7 +26,7 @@ public class SessionManager {
 	// 缓存存储 TODO
 	// 暂时用map存储
 	private static Map<String, SessionKey> SESSION_KEYS = new ConcurrentHashMap<>();
-	private static AppSetting appSetting = new AppSetting(Config.get("wx.appid"), Config.get("wx.secrect"));
+	private static AppSetting appSetting = new AppSetting(Config.get("wx.app.appid"), Config.get("wx.app.secrect"));
 
 	/**
 	 * 根据界面的jscode鉴权并兑换sessionkey

@@ -25,6 +25,7 @@ public class Platform {
 	private static File PATH_ROOT;// 根路径
 	private static File PATH_REQUEST;// 请求
 	private static File PATH_FUNCTION;// 函数文件夹
+	private static File PATH_MP;// 公众号转发文件夹
 
 	/**
 	 * 函数目录
@@ -54,6 +55,15 @@ public class Platform {
 	}
 
 	/**
+	 * 公众号转发
+	 * 
+	 * @return
+	 */
+	static File getMpPath() {
+		return PATH_MP;
+	}
+
+	/**
 	 * NAMI平台初始化,tomcat启动时调用
 	 */
 	protected static void init() {
@@ -80,6 +90,11 @@ public class Platform {
 		PATH_FUNCTION = new File(PATH_ROOT, "function");
 		if (!PATH_FUNCTION.exists()) {
 			PATH_FUNCTION.mkdirs();
+		}
+
+		PATH_MP = new File(PATH_ROOT, "mp");
+		if (!PATH_MP.exists()) {
+			PATH_MP.mkdirs();
 		}
 	}
 
