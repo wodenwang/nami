@@ -135,6 +135,21 @@
 			<artifactId>weixin-app</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>cn.com.riversoft</groupId>
+			<artifactId>weixin-mp</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>cn.com.riversoft</groupId>
+			<artifactId>weixin-pay</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>cn.com.riversoft</groupId>
+			<artifactId>weixin-open</artifactId>
+		</dependency>
+
 		<!-- servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
