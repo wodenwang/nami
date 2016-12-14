@@ -174,24 +174,6 @@
 				<version>${weixin-sdk.version}</version>
 			</dependency>
 
-			<dependency>
-				<groupId>cn.com.riversoft</groupId>
-				<artifactId>weixin-mp</artifactId>
-				<version>${weixin-sdk.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>cn.com.riversoft</groupId>
-				<artifactId>weixin-pay</artifactId>
-				<version>${weixin-sdk.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>cn.com.riversoft</groupId>
-				<artifactId>weixin-open</artifactId>
-				<version>${weixin-sdk.version}</version>
-			</dependency>
-
 			<!-- servlet jsp and jstl -->
 			<dependency>
 				<groupId>javax.servlet</groupId>
