@@ -3,10 +3,17 @@ function main() {
 	var a = request.getString("a") || 'none';
 	var b = request.getInteger("b") || 0;
 
-	return {
-		a : a,
-		b : b
-	}
+	var obj = {
+		a : 1
+	};
+	obj.list = [ {
+		abc : 11,
+		fdfdfd : 22
+	}, {
+		aa : 1,
+		dd : 'dd'
+	} ];
+	return obj;
 }
 
 // invoke

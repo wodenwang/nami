@@ -60,7 +60,11 @@ public class ScriptRequestServlet extends HttpServlet {
 			result = ExpressionAndScriptExecutors.getInstance().evaluateScript(scriptVo);// 无上下文
 		} catch (SystemRuntimeException e) {
 			Map<String, Object> errResult = new HashMap<>();
-			errResult.put("msg", e.getExtMessage());
+			String msg = e.getExtMessage();
+			if (StringUtils.isEmpty(msg)) {
+				msg = e.getType().getMsg();
+			}
+			errResult.put("msg", msg);
 			result = errResult;
 			response.setStatus(299);// 299表示NAMI业务逻辑错误;前端封转对状态码的判断
 		}
