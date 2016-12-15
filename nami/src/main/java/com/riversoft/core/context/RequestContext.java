@@ -32,6 +32,15 @@ public class RequestContext extends BaseContext {
 	}
 
 	/**
+	 * 获取httprequest
+	 * 
+	 * @return
+	 */
+	public final HttpServletRequest getHttpRequest() {
+		return request;
+	}
+
+	/**
 	 * 新设值
 	 * 
 	 * @param name

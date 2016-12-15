@@ -80,7 +80,7 @@ public class Platform {
 		} else {// 客户自定义部署
 			PATH_ROOT = new File(initFileUrl.getFile()).getParentFile();
 		}
-		logger.info("NAMI平台根目录初始化成功:{}", PATH_ROOT);
+		logger.info("NAMI平台根目录初始化成功:{}", PATH_ROOT.getAbsoluteFile());
 
 		PATH_REQUEST = new File(PATH_ROOT, "request");
 		if (!PATH_REQUEST.exists()) {

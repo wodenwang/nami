@@ -56,12 +56,12 @@ public class SmsFunction {
 	public void send(String mobile, String templateId, Map<String, String> params) {
 		try {
 			DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", "Sms", "sms.aliyuncs.com");
-			IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", Config.get("sms.aliyun.accessKey"),
-					Config.get("sms.aliyun.accessSecret"));
+			IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", Config.get("aliyun.sms.accessKey"),
+					Config.get("aliyun.sms.accessSecret"));
 			IAcsClient client = new DefaultAcsClient(profile);
 			SingleSendSmsRequest request = new SingleSendSmsRequest();
 
-			request.setSignName(Config.get("sms.aliyun.signName"));
+			request.setSignName(Config.get("aliyun.sms.signName", ""));
 			request.setTemplateCode(templateId);
 			request.setParamString(JsonMapper.defaultMapper().toJson(params));
 			request.setRecNum(mobile);
@@ -79,12 +79,13 @@ public class SmsFunction {
 	 *            手机号
 	 */
 	public void code(String mobile) {
-		String code = RandomUtils.createRandomCode(Integer.valueOf(Config.get("sms.code.length", "6")));
+		String code = RandomUtils.createRandomCode(Integer.valueOf(Config.get("aliyun.sms.code.length", "6")));
 		cache.put(mobile, code);
 
 		Map<String, String> params = new HashMap<>();
 		params.put("code", code);
-		send(mobile, Config.get("sms.code.template"), params);
+		params.put("product", Config.get("aliyun.sms.code.product", "系统"));
+		send(mobile, Config.get("aliyun.sms.code.template"), params);
 	}
 
 	/**

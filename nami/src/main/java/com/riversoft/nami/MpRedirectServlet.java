@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import com.riversoft.core.Config;
 import com.riversoft.core.exception.ExceptionType;
 import com.riversoft.core.exception.SystemRuntimeException;
+import com.riversoft.nami.mp.SessionHelper;
 import com.riversoft.weixin.common.exception.WxRuntimeException;
 import com.riversoft.weixin.common.oauth2.AccessToken;
 import com.riversoft.weixin.common.oauth2.OpenUser;
@@ -56,7 +57,7 @@ public class MpRedirectServlet extends HttpServlet {
 		String scope = prop.getProperty("scope", "snsapi_base");
 
 		// 已登录则直接转发
-		if (checkLogin(request)) {
+		if (SessionHelper.checkLogin(request)) {
 			response.sendRedirect(url);
 			return;
 		}
@@ -153,18 +154,8 @@ public class MpRedirectServlet extends HttpServlet {
 		} catch (WxRuntimeException e) {
 			throw new SystemRuntimeException(ExceptionType.WX, "无法获取公众号信息.");
 		}
-		request.getSession().setAttribute("mp_user", openUser);
+		SessionHelper.setUser(request, openUser);
 		return openUser;
-	}
-
-	/**
-	 * 校验有没登录
-	 * 
-	 * @param request
-	 * @return
-	 */
-	private static boolean checkLogin(HttpServletRequest request) {
-		return request.getSession().getAttribute("mp_user") != null;
 	}
 
 }
