@@ -73,29 +73,35 @@ public class Platform {
 			return;
 		}
 
-		URL initFileUrl = Thread.currentThread().getContextClassLoader().getResource("logback-test.xml");// 获取得到logback-test
+		URL initFileUrl = Thread.currentThread().getContextClassLoader().getResource("development.mode");// 开发模式特征
+		logger.info("目录参照系:{}", initFileUrl);
 		if (initFileUrl == null) { // 标准部署
 			URL url = Thread.currentThread().getContextClassLoader().getResource("production.properties");
+			logger.info("切换目录参照系:{}", initFileUrl);
 			PATH_ROOT = getPlatformRootPath(url, 4);
-		} else {// 客户自定义部署
+		} else {// 开发环境
 			PATH_ROOT = new File(initFileUrl.getFile()).getParentFile();
 		}
-		logger.info("NAMI平台根目录初始化成功:{}", PATH_ROOT.getAbsoluteFile());
+		logger.info("NAMI平台根目录初始化成功:{}", PATH_ROOT);
 
 		PATH_REQUEST = new File(PATH_ROOT, "request");
 		if (!PATH_REQUEST.exists()) {
 			PATH_REQUEST.mkdirs();
 		}
+		logger.info("NAMI request path:{}", PATH_REQUEST);
 
 		PATH_FUNCTION = new File(PATH_ROOT, "function");
 		if (!PATH_FUNCTION.exists()) {
 			PATH_FUNCTION.mkdirs();
 		}
+		logger.info("NAMI function path:{}", PATH_FUNCTION);
 
 		PATH_MP = new File(PATH_ROOT, "mp");
 		if (!PATH_MP.exists()) {
 			PATH_MP.mkdirs();
 		}
+		logger.info("NAMI mp path:{}", PATH_MP);
+
 	}
 
 	/**

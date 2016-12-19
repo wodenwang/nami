@@ -22,42 +22,42 @@ import com.riversoft.core.script.annotation.ScriptSupport;
  */
 public class ExprlangAnnotationScanner {
 
-    /**
-     * @param scanPackage the scanPackage to set
-     */
-    public void setScanPackage(String scanPackage) {
-        this.scanPackage = scanPackage;
-    }
+	/**
+	 * @param scanPackage
+	 *            the scanPackage to set
+	 */
+	public void setScanPackage(String scanPackage) {
+		this.scanPackage = scanPackage;
+	}
 
-    private Logger logger = LoggerFactory.getLogger(ExprlangAnnotationScanner.class);
+	private Logger logger = LoggerFactory.getLogger(ExprlangAnnotationScanner.class);
 
-    private String scanPackage = "com.riversoft";
+	private String scanPackage = "com.riversoft";
 
-    private Map<String, Object> context = new HashMap<>();
+	private Map<String, Object> context = new HashMap<>();
 
-    public void init() {
-        ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
-        scanner.addIncludeFilter(new AnnotationTypeFilter(ScriptSupport.class));
-        for (BeanDefinition bd : scanner.findCandidateComponents(scanPackage)) {
-            String clazzName = bd.getBeanClassName();
-            Class<?> clazz;
-            try {
-                clazz = Class.forName(clazzName);
-                ScriptSupport elSupport = clazz.getAnnotation(ScriptSupport.class);
+	public void init() {
+		ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
+		scanner.addIncludeFilter(new AnnotationTypeFilter(ScriptSupport.class));
+		for (BeanDefinition bd : scanner.findCandidateComponents(scanPackage)) {
+			String clazzName = bd.getBeanClassName();
+			Class<?> clazz;
+			try {
+				clazz = Class.forName(clazzName);
+				ScriptSupport elSupport = clazz.getAnnotation(ScriptSupport.class);
+				context.put(elSupport.value(), clazz.newInstance());
+			} catch (Exception e) {
+				logger.warn("ExprlangAnnotationScanner scan failed:" + e.getMessage());
+			}
+		}
 
-                context.put(elSupport.value(), clazz.newInstance());
-            } catch (Exception e) {
-                logger.warn("ExprlangAnnotationScanner scan failed:" + e.getMessage());
-            }
-        }
+		for (String key : context.keySet()) {
+			logger.info("Exprlang Util: " + key + "->" + context.get(key).getClass().getName());
+		}
+	}
 
-        for (String key : context.keySet()) {
-            logger.info("Exprlang Util: " + key + "->" + context.get(key).getClass().getName());
-        }
-    }
-
-    public Map<String, Object> getElSupports() {
-        return context;
-    }
+	public Map<String, Object> getElSupports() {
+		return context;
+	}
 
 }

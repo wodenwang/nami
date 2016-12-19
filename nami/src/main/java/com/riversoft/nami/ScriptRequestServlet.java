@@ -64,6 +64,7 @@ public class ScriptRequestServlet extends HttpServlet {
 			if (StringUtils.isEmpty(msg)) {
 				msg = e.getType().getMsg();
 			}
+			errResult.put("code", -1);
 			errResult.put("msg", msg);
 			result = errResult;
 			response.setStatus(299);// 299表示NAMI业务逻辑错误;前端封转对状态码的判断

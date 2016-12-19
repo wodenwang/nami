@@ -27,14 +27,13 @@ import com.riversoft.weixin.pay.mp.bean.UnifiedOrderResponse;
 @ScriptSupport("mp")
 public class MpFunction {
 
-	private final AppSetting appSetting;
-
-	public MpFunction() {
-		appSetting = new AppSetting();
+	private final AppSetting getSetting() {
+		AppSetting appSetting = new AppSetting();
 		appSetting.setAppId((String) Config.get("wx.fwh.appId"));
 		appSetting.setSecret((String) Config.get("wx.fwh.secrect"));
 		appSetting.setToken((String) Config.get("wx.fwh.token"));
 		appSetting.setAesKey((String) Config.get("wx.fwh.encodingAESKey"));
+		return appSetting;
 	}
 
 	/**
@@ -53,7 +52,7 @@ public class MpFunction {
 	 * @return
 	 */
 	public JsAPISignature signature(String url) {
-		return JsAPIs.with(appSetting).createJsAPISignature(url);
+		return JsAPIs.with(getSetting()).createJsAPISignature(url);
 	}
 
 	/**
@@ -62,7 +61,7 @@ public class MpFunction {
 	 * @return
 	 */
 	public MpPayFunction getPay() {
-		return MpPayFunction.instance;
+		return new MpPayFunction();
 	}
 
 	/**
@@ -71,17 +70,16 @@ public class MpFunction {
 	 * @author woden
 	 *
 	 */
-	private static class MpPayFunction {
-		private static MpPayFunction instance = new MpPayFunction();
-		private final static PaySetting paySetting;
-		static {
-			paySetting = new PaySetting();
+	public static class MpPayFunction {
+
+		private final PaySetting getSetting() {
+			PaySetting paySetting = new PaySetting();
 			paySetting.setAppId((String) Config.get("wx.fwh.pay.appId"));
 			paySetting.setMchId((String) Config.get("wx.fwh.pay.mchId"));
 			paySetting.setKey((String) Config.get("wx.fwh.pay.paySecret"));
 			paySetting.setCertPath((String) Config.get("wx.fwh.pay.certPath"));
 			paySetting.setCertPassword((String) Config.get("wx.fwh.pay.certPassword"));
-
+			return paySetting;
 		}
 
 		/**
@@ -92,7 +90,7 @@ public class MpFunction {
 		 * @return
 		 */
 		public JSSignature signature(String prepayId) {
-			return JsSigns.with(paySetting).createJsSignature(prepayId);
+			return JsSigns.with(getSetting()).createJsSignature(prepayId);
 		}
 
 		/**
@@ -102,6 +100,7 @@ public class MpFunction {
 		 * @return
 		 */
 		public UnifiedOrderResponse order(Map<String, Object> params) {
+			PaySetting paySetting = getSetting();
 			UnifiedOrderRequest orderRequest = PayRequestBuilder.buildUnifiedOrderRequest(paySetting.getMchId(),
 					params);
 			return Orders.with(paySetting).unifiedOrder(orderRequest);
