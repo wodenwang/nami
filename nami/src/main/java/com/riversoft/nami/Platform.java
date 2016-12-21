@@ -73,12 +73,11 @@ public class Platform {
 			return;
 		}
 
-		URL initFileUrl = Thread.currentThread().getContextClassLoader().getResource("development.mode");// 开发模式特征
-		logger.info("目录参照系:{}", initFileUrl);
+		URL initFileUrl = Thread.currentThread().getContextClassLoader().getResource("logback-test.xml");// 开发模式特征
 		if (initFileUrl == null) { // 标准部署
-			URL url = Thread.currentThread().getContextClassLoader().getResource("production.properties");
+			initFileUrl = Thread.currentThread().getContextClassLoader().getResource("jdbc.properties");
 			logger.info("切换目录参照系:{}", initFileUrl);
-			PATH_ROOT = getPlatformRootPath(url, 4);
+			PATH_ROOT = new File(initFileUrl.getFile()).getParentFile().getParentFile();
 		} else {// 开发环境
 			PATH_ROOT = new File(initFileUrl.getFile()).getParentFile();
 		}
@@ -104,32 +103,4 @@ public class Platform {
 
 	}
 
-	/**
-	 * 获取生产系统平台路径
-	 * 
-	 * @param url
-	 * @param parentLevel
-	 * @return
-	 */
-	private static File getPlatformRootPath(URL url, int parentLevel) {
-		if (url == null) {
-			return null;
-		}
-
-		File file = new File(url.getFile());
-		if (file.exists()) {
-
-			File root = file;
-			for (int i = 0; i < parentLevel; i++) {
-				root = root.getParentFile();
-				if (!root.exists()) {
-					return null;
-				}
-			}
-			if (root.exists() && root.isDirectory()) {
-				return root;
-			}
-		}
-		return null;
-	}
 }

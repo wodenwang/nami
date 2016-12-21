@@ -3,7 +3,7 @@
  * $Id: $
  * Copyright (c) 2015 by Riversoft System, all rights reserved.
  */
-package com.riversoft.core.script.function;
+package com.riversoft.nami.function;
 
 import com.riversoft.core.script.annotation.ScriptSupport;
 
