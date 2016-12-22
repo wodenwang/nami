@@ -97,6 +97,11 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.fasterxml.woodstox</groupId>
+			<artifactId>woodstox-core</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>com.jayway.restassured</groupId>
 			<artifactId>rest-assured</artifactId>
 		</dependency>
