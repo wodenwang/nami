@@ -1,4 +1,4 @@
-package com.riversoft.core.script.function;
+package com.riversoft.nami.function;
 
 import com.jayway.restassured.specification.RequestSpecification;
 import com.riversoft.core.script.annotation.ScriptSupport;

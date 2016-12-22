@@ -3,7 +3,7 @@
  * $Id: $
  * Copyright (c) 2016 by Riversoft System, all rights reserved.
  */
-package com.riversoft.nami.mp;
+package com.riversoft.nami.session;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,7 +21,7 @@ public class SessionHelper {
 	 * @param request
 	 * @param user
 	 */
-	public static void setUser(HttpServletRequest request, OpenUser user) {
+	public static void setMpUser(HttpServletRequest request, OpenUser user) {
 		request.getSession().setAttribute("mp_user", user);
 	}
 
@@ -31,7 +31,7 @@ public class SessionHelper {
 	 * @param request
 	 * @return
 	 */
-	public static boolean checkLogin(HttpServletRequest request) {
+	public static boolean checkMpLogin(HttpServletRequest request) {
 		return request.getSession().getAttribute("mp_user") != null;
 	}
 
@@ -41,7 +41,8 @@ public class SessionHelper {
 	 * @param request
 	 * @return
 	 */
-	public static OpenUser getUser(HttpServletRequest request) {
+	public static OpenUser getMpUser(HttpServletRequest request) {
 		return (OpenUser) request.getSession().getAttribute("mp_user");
 	}
+
 }

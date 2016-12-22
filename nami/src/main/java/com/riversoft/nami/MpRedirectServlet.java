@@ -9,6 +9,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.ServletException;
@@ -22,9 +25,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.riversoft.core.Config;
+import com.riversoft.core.context.RequestContext;
+import com.riversoft.core.context.VariableContext;
 import com.riversoft.core.exception.ExceptionType;
 import com.riversoft.core.exception.SystemRuntimeException;
-import com.riversoft.nami.mp.SessionHelper;
+import com.riversoft.core.script.ExpressionAndScriptExecutors;
+import com.riversoft.core.script.ExpressionAndScriptExecutors.ScriptValueObject;
+import com.riversoft.nami.session.SessionHelper;
 import com.riversoft.weixin.common.exception.WxRuntimeException;
 import com.riversoft.weixin.common.oauth2.AccessToken;
 import com.riversoft.weixin.common.oauth2.OpenUser;
@@ -40,6 +47,7 @@ import com.riversoft.weixin.mp.oauth2.MpOAuth2s;
 public class MpRedirectServlet extends HttpServlet {
 
 	static Logger logger = LoggerFactory.getLogger(MpRedirectServlet.class);
+	private static AppSetting mpAppSetting = new AppSetting(Config.get("wx.fwh.appId"), Config.get("wx.fwh.secrect"));
 
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
@@ -51,26 +59,31 @@ public class MpRedirectServlet extends HttpServlet {
 		}
 
 		String requestUri = request.getRequestURI();
+		String queryString = request.getQueryString();
+
 		Properties prop = findConfigFromUrl(requestUri);
 
 		String url = prop.getProperty("url");
 		String scope = prop.getProperty("scope", "snsapi_base");
+		if (StringUtils.isNotEmpty(queryString)) {
+			url = url + "?" + queryString;
+		}
 
 		// 已登录则直接转发
-		if (SessionHelper.checkLogin(request)) {
+		if (SessionHelper.checkMpLogin(request)) {
+			// 执行切片
+			executeMpAspect(request, requestUri);
 			response.sendRedirect(url);
 			return;
 		}
-
-		String appId = Config.get("wx.fwh.appid");
-		String secrect = Config.get("wx.fwh.secrect");
-		AppSetting mpAppSetting = new AppSetting(appId, secrect);
 
 		// 微信传入处理
 		String code = request.getParameter("code");
 		if (StringUtils.isNotEmpty(code)) {
 			logger.debug("微信公众号code自动登录");
 			login(request, mpAppSetting, code);
+			// 执行切片
+			executeMpAspect(request, requestUri);
 			response.sendRedirect(url);
 			return;
 		}
@@ -140,6 +153,48 @@ public class MpRedirectServlet extends HttpServlet {
 	}
 
 	/**
+	 * 入口脚本文件
+	 * 
+	 * @param requestUri
+	 * @return
+	 */
+	private ScriptValueObject findScriptFromUrl(String requestUri) {
+		String path = StringUtils.substring(requestUri, "/mp".length());
+
+		File file = new File(Platform.getMpPath(), path + ".groovy");
+		if (!file.exists()) {
+			file = new File(Platform.getMpPath(), path + ".js");
+		}
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		try {
+			return new ScriptValueObject(file);
+		} catch (IOException e) {
+			logger.error("", e);
+			throw new SystemRuntimeException(ExceptionType.SCRIPT, "脚本[" + file.getAbsolutePath() + "]无法读取.", e);
+		}
+	}
+
+	/**
+	 * 入口切片执行
+	 * 
+	 * @param request
+	 * @param requestUri
+	 */
+	private void executeMpAspect(HttpServletRequest request, String requestUri) {
+		ScriptValueObject scriptVo = findScriptFromUrl(requestUri);
+		logger.debug("获取到脚本:{}", scriptVo);
+		if (scriptVo != null) {
+			// 初始化上下文
+			initContext(request);
+			ExpressionAndScriptExecutors.getInstance().evaluateScript(scriptVo);// 无上下文
+		}
+	}
+
+	/**
 	 * 微信公众号code自动登录
 	 * 
 	 * @param request
@@ -154,8 +209,33 @@ public class MpRedirectServlet extends HttpServlet {
 		} catch (WxRuntimeException e) {
 			throw new SystemRuntimeException(ExceptionType.WX, "无法获取公众号信息.");
 		}
-		SessionHelper.setUser(request, openUser);
+		SessionHelper.setMpUser(request, openUser);
 		return openUser;
+	}
+
+	/**
+	 * 初始化request和session的localthread
+	 * 
+	 * @param request
+	 */
+	private void initContext(HttpServletRequest request) {
+		// 设置threadlocal
+		// 设置request
+		{
+			Enumeration<String> names = request.getParameterNames();
+			Map<String, Object> params = new HashMap<>();
+			while (names.hasMoreElements()) {
+				String name = names.nextElement();
+				// logger.debug("当前表单数据[" + name + "]以设置入threadlocal.");
+				params.put(name, request.getParameterValues(name));
+			}
+			RequestContext.init(request, params);// 设置
+		}
+
+		// 设置variable
+		{
+			VariableContext.init();
+		}
 	}
 
 }
