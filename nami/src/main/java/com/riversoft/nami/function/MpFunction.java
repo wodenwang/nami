@@ -13,6 +13,10 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.riversoft.weixin.pay.payment.Payments;
+import com.riversoft.weixin.pay.payment.bean.Signature;
+import com.riversoft.weixin.pay.payment.bean.UnifiedOrderRequest;
+import com.riversoft.weixin.pay.payment.bean.UnifiedOrderResponse;
 import org.apache.commons.lang3.StringUtils;
 
 import com.riversoft.core.Config;
@@ -26,10 +30,6 @@ import com.riversoft.weixin.mp.base.AppSetting;
 import com.riversoft.weixin.mp.jsapi.JsAPIs;
 import com.riversoft.weixin.pay.base.PaySetting;
 import com.riversoft.weixin.pay.mp.JsSigns;
-import com.riversoft.weixin.pay.mp.Orders;
-import com.riversoft.weixin.pay.mp.bean.JSSignature;
-import com.riversoft.weixin.pay.mp.bean.UnifiedOrderRequest;
-import com.riversoft.weixin.pay.mp.bean.UnifiedOrderResponse;
 
 /**
  * @author woden
@@ -91,8 +91,8 @@ public class MpFunction {
 		 *            预付订单ID
 		 * @return
 		 */
-		public JSSignature signature(String prepayId) {
-			return JsSigns.with(getSetting()).createJsSignature(prepayId);
+		public Signature signature(String prepayId) {
+			return JsSigns.with(getSetting()).createSignature(prepayId);
 		}
 
 		/**
@@ -104,7 +104,7 @@ public class MpFunction {
 		public UnifiedOrderResponse order(Map<String, Object> params) {
 			PaySetting paySetting = getSetting();
 			UnifiedOrderRequest orderRequest = buildUnifiedOrderRequest(paySetting.getMchId(), params);
-			return Orders.with(paySetting).unifiedOrder(orderRequest);
+			return Payments.with(paySetting).unifiedOrder(orderRequest);
 		}
 
 		private static UnifiedOrderRequest buildUnifiedOrderRequest(String mchId, Map<String, Object> map) {
