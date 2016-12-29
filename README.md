@@ -1,5 +1,7 @@
 # NAMI：专为微信小程序服务端开发而生
-*面向前端开发人员的后端逻辑中间件*
+*面向前端开发人员的后端逻辑容器.*
+*百度云盘: [http://pan.baidu.com/s/1c1Q8viK](http://pan.baidu.com/s/1c1Q8viK)*
+
 
 ## 什么是NAMI
 微信小程序的前端框架，官方命名为MINA；那我们的非官方后端就呼应一下，姑且命名为NAMI（纳米）。<br/>
@@ -113,9 +115,6 @@ main();
 mvn clean install
 ```
 打包结果在/package/target/nami-pack-\<platform>.zip, platform = nojdk|win32|win64|linux32|linux64
-
-## 直接下载
-百度云盘: [http://pan.baidu.com/s/1c1Q8viK](http://pan.baidu.com/s/1c1Q8viK)
 
 ## 关于我们
 - woden
