@@ -14,6 +14,7 @@ import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 
 import com.riversoft.weixin.pay.payment.Payments;
+import com.riversoft.weixin.pay.payment.Signatures;
 import com.riversoft.weixin.pay.payment.bean.Signature;
 import com.riversoft.weixin.pay.payment.bean.UnifiedOrderRequest;
 import com.riversoft.weixin.pay.payment.bean.UnifiedOrderResponse;
@@ -29,7 +30,6 @@ import com.riversoft.weixin.common.jsapi.JsAPISignature;
 import com.riversoft.weixin.mp.base.AppSetting;
 import com.riversoft.weixin.mp.jsapi.JsAPIs;
 import com.riversoft.weixin.pay.base.PaySetting;
-import com.riversoft.weixin.pay.mp.JsSigns;
 
 /**
  * @author woden
@@ -92,7 +92,7 @@ public class MpFunction {
 		 * @return
 		 */
 		public Signature signature(String prepayId) {
-			return JsSigns.with(getSetting()).createSignature(prepayId);
+			return Signatures.with(getSetting()).createJsSignature(prepayId);
 		}
 
 		/**
