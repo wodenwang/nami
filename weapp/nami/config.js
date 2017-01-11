@@ -1,7 +1,7 @@
 /**
  * 连接NAMI服务端地址
  */
-const HOST = "https://localhost:8443";
+const HOST = "http://localhost:8080";
 
 /**
  * 是否需要获取unionid

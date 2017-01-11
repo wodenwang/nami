@@ -72,12 +72,16 @@ var storeUserInfo = callback => {
             getApp().userInfo = res.userInfo;
             typeof callback == "function" && callback(res.userInfo);
         },
-        fail: function () {
+        fail: function (res) {
+            console.log('fail:', res);
             wx.showModal({
                 title: '提示',
                 content: '用户未登录,无法获取数据',
                 showCancel: false
             })
+        },
+        complete: function (res) {
+            console.log('complete:', res);
         }
     })
 }

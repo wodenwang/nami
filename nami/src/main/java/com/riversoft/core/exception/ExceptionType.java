@@ -31,22 +31,17 @@ public enum ExceptionType {
 	/**
 	 * 上下文属性异常
 	 */
-	CONTEXT(100, "上下文属性异常。"),
-	CONTEXT_EMPTY(101, "属性不存在。"),
+	CONTEXT(100, "上下文属性异常。"), CONTEXT_EMPTY(101, "属性不存在。"),
 
 	/**
 	 * 脚本执行属性异常
 	 */
-	SCRIPT(200, "脚本执行异常。"),
-	SCRIPT_ATTRIBUTE_EMPTY(201, "属性不存在。"),
-	SCRIPT_METHOD_EMPTY(202, "方法不存在。"),
-	SCRIPT_COMPILE_ERROR(203, "脚本编译出错。"),
-	SCRIPT_BUSI(204, "脚本业务异常。"),
+	SCRIPT(200, "脚本执行异常。"), SCRIPT_ATTRIBUTE_EMPTY(201, "属性不存在。"), SCRIPT_METHOD_EMPTY(202, "方法不存在。"), SCRIPT_COMPILE_ERROR(203, "脚本编译出错。"), SCRIPT_BUSI(204, "脚本业务异常。"),
 
 	/**
 	 * 微信交互相关异常
 	 */
-	WX(300, "微信交互相关异常.")
+	WX(300, "微信交互相关异常."), WX_PAY_NOTIFY(301, "微信支付通知失败"),
 
 	/**/
 	;

@@ -16,12 +16,22 @@ import com.riversoft.core.script.annotation.ScriptSupport;
 public class SessionFunction {
 
 	/**
-	 * 获取当前用户
+	 * 获取当前用户(服务号)
 	 * 
 	 * @return
 	 */
 	public Object mpUser() {
 		return SessionHelper.getMpUser(RequestContext.getCurrent().getHttpRequest());
+	}
+
+	/**
+	 * 获取当前用户(小程序)
+	 * 
+	 * @param token
+	 * @return
+	 */
+	public Object appUser(String token) {
+		return SessionManager.get(token);
 	}
 
 	/**
