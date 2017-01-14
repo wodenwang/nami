@@ -5,6 +5,7 @@
  */
 package com.riversoft.nami.function;
 
+import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +27,11 @@ import com.riversoft.core.exception.SystemRuntimeException;
 import com.riversoft.core.script.annotation.ScriptSupport;
 import com.riversoft.util.Formatter;
 import com.riversoft.weixin.app.base.AppSetting;
+import com.riversoft.weixin.common.util.XmlObjectMapper;
 import com.riversoft.weixin.pay.base.PaySetting;
 import com.riversoft.weixin.pay.payment.Payments;
 import com.riversoft.weixin.pay.payment.Signatures;
+import com.riversoft.weixin.pay.payment.bean.PaymentNotification;
 import com.riversoft.weixin.pay.payment.bean.Signature;
 import com.riversoft.weixin.pay.payment.bean.UnifiedOrderRequest;
 import com.riversoft.weixin.pay.payment.bean.UnifiedOrderResponse;
@@ -194,6 +198,65 @@ public class WeAppFunction {
 			}
 
 			return domain + notify;
+		}
+
+		/**
+		 * 获取当前支付回调请求.在回调中使用.
+		 * 
+		 * @return
+		 */
+		public PaymentNotification currentNotify() {
+			HttpServletRequest request = RequestContext.getCurrent().getHttpRequest();
+			String content;
+			PaymentNotification paymentNotification;
+			try {
+				content = IOUtils.toString(request.getInputStream(), "UTF-8");
+				logger.info("微信支付通知结果:\n{}", content);
+				paymentNotification = XmlObjectMapper.defaultMapper().fromXml(content, PaymentNotification.class);
+			} catch (IOException e) {
+				throw new SystemRuntimeException(ExceptionType.WX_PAY_NOTIFY, e);
+			}
+
+			String appId = paymentNotification.getAppId();
+			PaySetting paySetting = getSetting();
+			if (!StringUtils.equals(paySetting.getAppId(), appId)) {
+				throw new SystemRuntimeException(ExceptionType.WX_PAY_NOTIFY, "支付通知不匹配.");
+			}
+
+			if (!Payments.with(paySetting).checkSignature(paymentNotification)) {
+				throw new SystemRuntimeException(ExceptionType.WX_PAY_NOTIFY, "签名不匹配.");
+			}
+
+			if (!paymentNotification.success()) {
+				throw new SystemRuntimeException(ExceptionType.WX_PAY_NOTIFY, "支付没有成功.");
+			}
+
+			return paymentNotification;
+		}
+
+		/**
+		 * 支付通知成功
+		 * 
+		 * @return
+		 */
+		public String notifySuccess() {
+			return notifyError(null);
+		}
+
+		/**
+		 * 支付通知失败
+		 * 
+		 * @param errorMsg
+		 * @return
+		 */
+		public String notifyError(String errorMsg) {
+			String template = "<xml><return_code><![CDATA[%s]]></return_code><return_msg><![CDATA[%s]]></return_msg></xml>";
+			if (StringUtils.isEmpty(errorMsg)) {
+				return String.format(template, "SUCCESS", "OK");
+			}
+
+			// 错误
+			return String.format(template, "FAIL", errorMsg);
 		}
 	}
 }

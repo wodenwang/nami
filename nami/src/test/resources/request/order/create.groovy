@@ -2,6 +2,8 @@
 def token = request.getString("token");//session key
 def courseId = request.getString("courseId");//课程ID
 
+log.info(token);
+
 //返回支付密匙,用于发起支付
 
 //根据入参构建param

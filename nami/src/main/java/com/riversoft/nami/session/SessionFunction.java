@@ -35,6 +35,15 @@ public class SessionFunction {
 	}
 
 	/**
+	 * 获取当前用户(小程序)
+	 * 
+	 * @return
+	 */
+	public Object appUser() {
+		return appUser(RequestContext.getCurrent().getString("nami_token"));
+	}
+
+	/**
 	 * 设置session值
 	 * 
 	 * @param key

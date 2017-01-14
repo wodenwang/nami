@@ -52,7 +52,7 @@ public class ScriptRequestServlet extends HttpServlet {
 
 		// 路由执行
 		String requestUri = request.getRequestURI();
-		logger.debug("获取到请求:{}", requestUri);
+		logger.debug("获取到请求:{},参数:{}", requestUri, request.getQueryString());
 
 		Object result;
 		try {

@@ -24,7 +24,7 @@ import com.riversoft.weixin.common.exception.WxRuntimeException;
  * @author woden
  */
 @SuppressWarnings("serial")
-@WebServlet(description = "NAMI会话管理", urlPatterns = { "/login.nami", "/unionid.nami" })
+@WebServlet(description = "NAMI会话管理", urlPatterns = { "/login.nami", "/userInfo.nami" })
 public class SessionServlet extends HttpServlet {
 
 	static Logger logger = LoggerFactory.getLogger(SessionServlet.class);
@@ -38,8 +38,8 @@ public class SessionServlet extends HttpServlet {
 		case "/login.nami":
 			result = login(request, response);
 			break;
-		case "/unionid.nami":
-			result = saveUnionId(request, response);
+		case "/userInfo.nami":
+			result = syncUserInfo(request, response);
 			break;
 		default:
 			result = new HashMap<>();
@@ -62,8 +62,8 @@ public class SessionServlet extends HttpServlet {
 		Map<String, Object> result = new HashMap<>();
 		try {
 			String code = request.getParameter("code");
-			String namiKey = SessionManager.jscode2session(code);
-			result.put("key", namiKey);
+			String namiToken = SessionManager.jscode2session(code);
+			result.put("key", namiToken);
 		} catch (WxRuntimeException e) {
 			logger.error("调用微信登录接口出错", e);
 			response.setStatus(299);
@@ -73,17 +73,18 @@ public class SessionServlet extends HttpServlet {
 		return result;
 	}
 
-	private Map<String, Object> saveUnionId(HttpServletRequest request, HttpServletResponse response)
+	private Map<String, Object> syncUserInfo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Map<String, Object> result = new HashMap<>();
-		// TODO
 		String rawData = request.getParameter("rawData");
 		String signature = request.getParameter("signature");
-		String namiKey = request.getParameter("namiKey");
+		String namiToken = request.getParameter("namiToken");
+		String encryptedData = request.getParameter("encryptedData");
+		String iv = request.getParameter("iv");
 
-		SessionManager.saveUnionId(namiKey, rawData, signature);
+		SessionManager.syncUserInfo(namiToken, rawData, signature, encryptedData, iv);
 
-		result.put("msg", "已获取UNION_ID");
+		result.put("msg", "已获取更多信息");
 		return result;
 	}
 
