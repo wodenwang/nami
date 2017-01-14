@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>nami-product</artifactId>
 		<groupId>cn.com.riversoft</groupId>
-		<version>0.1.2-SNAPSHOT</version>
+		<version>0.2.0</version>
 	</parent>
 	<packaging>pom</packaging>
 	<modelVersion>4.0.0</modelVersion>
