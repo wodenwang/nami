@@ -31,7 +31,7 @@ def order =app.pay.order([
 	openId : user.openId,
 	total : total,
 	body : '多谢赞赏',
-	notify : '/request/scholes_pay/pay_callback.groovy' //回调
+	notify : nami.invoke('host.groovy')+'/request/scholes_pay/pay_callback.groovy' //回调
 ]);
 
 //向客户端生成支付加密串

@@ -188,7 +188,7 @@ public class WeAppFunction {
 			}
 
 			HttpServletRequest request = RequestContext.getCurrent().getHttpRequest();
-			String domain = request.getScheme() + "://" + request.getServerName()
+			String domain = request.getScheme() + "https://" + request.getServerName()
 					+ ((request.getServerPort() == 80 || request.getServerPort() == 443) ? ""
 							: (":" + request.getServerPort()))
 					+ request.getContextPath();
