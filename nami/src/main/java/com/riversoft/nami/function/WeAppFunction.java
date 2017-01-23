@@ -27,6 +27,8 @@ import com.riversoft.core.exception.SystemRuntimeException;
 import com.riversoft.core.script.annotation.ScriptSupport;
 import com.riversoft.util.Formatter;
 import com.riversoft.weixin.app.base.AppSetting;
+import com.riversoft.weixin.app.template.Message;
+import com.riversoft.weixin.app.template.Templates;
 import com.riversoft.weixin.common.util.XmlObjectMapper;
 import com.riversoft.weixin.pay.base.PaySetting;
 import com.riversoft.weixin.pay.payment.Payments;
@@ -60,6 +62,23 @@ public class WeAppFunction {
 	 */
 	public WeAppPayFunction getPay() {
 		return new WeAppPayFunction();
+	}
+
+	/**
+	 * TODO 模板消息
+	 * 
+	 * @param param
+	 */
+	public void send(Map<String, Object> param) {
+		Message message = new Message();
+		message.setToUser((String) param.get("openId"));
+		message.setFormId((String) param.get("openId"));
+		message.setTemplateId((String) param.get("openId"));
+
+		message.setHighlight((String) param.get("highlight"));
+		message.setPage((String) param.get("page"));
+
+		Templates.with(getSetting()).send(message);
 	}
 
 	/**
