@@ -5,10 +5,13 @@
  */
 package com.riversoft.nami.session;
 
+import java.util.Base64;
+import java.util.Base64.Decoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,6 +53,7 @@ public class SessionManager {
 		Map<String, Object> obj = new HashMap<>();
 		obj.put("openId", openId);
 		obj.put("sessionKey", sessionKey.getSessionKey());
+		logger.info("登录:openid={},sessionKey={}", sessionKey.getOpenId(), sessionKey.getSessionKey());
 		FULL_SESSION_POOL.put(namiToken, obj);
 		return namiToken;
 	}
@@ -61,6 +65,7 @@ public class SessionManager {
 	 * @return
 	 */
 	public static Map<String, Object> get(String namiToken) {
+		logger.debug("获取NAMI_TOKEN:{}", namiToken);
 		if (!FULL_SESSION_POOL.containsKey(namiToken)) {
 			throw new SystemRuntimeException(ExceptionType.WX, "登录超时");
 		}
@@ -72,19 +77,40 @@ public class SessionManager {
 	 * 获取更多用户属性
 	 * 
 	 * @param namiToken
-	 * @param rawData
-	 * @param signature
 	 * @param encryptedData
 	 * @param iv
 	 */
-	public static void syncUserInfo(String namiToken, String rawData, String signature, String encryptedData,
-			String iv) {
-		Map<String, Object> userInfo = JsonMapper.defaultMapper().fromJson(rawData, Map.class);
+	public static void syncUserInfo(String namiToken, String encryptedData, String iv) {
+		// logger.debug("获取更多属性:rawData={},signature={},encryptedData={},iv={}",
+		// rawData, signature, encryptedData, iv);
+
 		Map<String, Object> obj = get(namiToken);
+		Map<String, Object> userInfo = JsonMapper.defaultMapper()
+				.fromJson(decrypt(encryptedData, (String) obj.get("sessionKey"), iv), Map.class);
+		// logger.debug("获取userInfo:{}", userInfo);
+		// logger.debug("token兑换sessionKey:token={}", namiToken);
 		if (userInfo != null && obj != null) {
 			obj.put("nickName", userInfo.get("nickName"));
 			obj.put("avatarUrl", userInfo.get("avatarUrl"));
+			obj.put("unionId", userInfo.get("unionId"));
+			obj.put("gender", userInfo.get("gender"));
+			obj.put("language", userInfo.get("language"));
+			obj.put("city", userInfo.get("city"));
+			obj.put("province", userInfo.get("province"));
+			obj.put("country", userInfo.get("country"));
 		}
 		logger.debug("更新会话:{}", obj);
+	}
+
+	private static String decrypt(String encryptedData, String sessionKey, String iv) {
+		Decoder decoder = Base64.getDecoder();
+		try {
+			byte[] result = AES.decrypt(decoder.decode(encryptedData), decoder.decode(sessionKey),
+					AES.generateIV(decoder.decode(iv)));
+
+			return StringUtils.toString(result, "utf-8");
+		} catch (Exception e) {
+			throw new SystemRuntimeException(e);
+		}
 	}
 }

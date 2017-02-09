@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.riversoft.core.exception.ExceptionType;
+import com.riversoft.core.exception.SystemRuntimeException;
 import com.riversoft.nami.session.SessionManager;
 import com.riversoft.util.JsonMapper;
 import com.riversoft.weixin.common.exception.WxRuntimeException;
@@ -24,7 +26,7 @@ import com.riversoft.weixin.common.exception.WxRuntimeException;
  * @author woden
  */
 @SuppressWarnings("serial")
-@WebServlet(description = "NAMI会话管理", urlPatterns = { "/login.nami", "/userInfo.nami" })
+@WebServlet(description = "NAMI会话管理", urlPatterns = { "/login.nami", "/userInfo.nami", "/checkLogin.nami" })
 public class SessionServlet extends HttpServlet {
 
 	static Logger logger = LoggerFactory.getLogger(SessionServlet.class);
@@ -34,18 +36,28 @@ public class SessionServlet extends HttpServlet {
 
 		Map<String, Object> result;
 		String servletPath = request.getServletPath();
-		switch (servletPath) {
-		case "/login.nami":
-			result = login(request, response);
-			break;
-		case "/userInfo.nami":
-			result = syncUserInfo(request, response);
-			break;
-		default:
-			result = new HashMap<>();
-			result.put("msg", "请求路径出错");
+		try {
+			switch (servletPath) {
+			case "/login.nami":
+				result = login(request, response);
+				break;
+			case "/userInfo.nami":
+				result = syncUserInfo(request, response);
+				break;
+			case "/checkLogin.nami":
+				result = checkLogin(request, response);
+				break;
+			default:
+				result = new HashMap<>();
+				result.put("msg", "请求路径出错");
+				response.setStatus(299);
+				break;
+			}
+		} catch (WxRuntimeException | SystemRuntimeException e) {
+			logger.warn("调用微信登录接口出错", e);
 			response.setStatus(299);
-			break;
+			result = new HashMap<>();
+			result.put("msg", e.getMessage());
 		}
 
 		response.setContentType("application/json;charset=utf-8");
@@ -60,15 +72,9 @@ public class SessionServlet extends HttpServlet {
 	private Map<String, Object> login(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Map<String, Object> result = new HashMap<>();
-		try {
-			String code = request.getParameter("code");
-			String namiToken = SessionManager.jscode2session(code);
-			result.put("key", namiToken);
-		} catch (WxRuntimeException e) {
-			logger.error("调用微信登录接口出错", e);
-			response.setStatus(299);
-			result.put("msg", e.getMessage());
-		}
+		String code = request.getParameter("code");
+		String namiToken = SessionManager.jscode2session(code);
+		result.put("key", namiToken);
 
 		return result;
 	}
@@ -76,16 +82,28 @@ public class SessionServlet extends HttpServlet {
 	private Map<String, Object> syncUserInfo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Map<String, Object> result = new HashMap<>();
-		String rawData = request.getParameter("rawData");
-		String signature = request.getParameter("signature");
 		String namiToken = request.getParameter("namiToken");
 		String encryptedData = request.getParameter("encryptedData");
 		String iv = request.getParameter("iv");
 
-		SessionManager.syncUserInfo(namiToken, rawData, signature, encryptedData, iv);
+		SessionManager.syncUserInfo(namiToken, encryptedData, iv);
 
 		result.put("msg", "已获取更多信息");
 		return result;
+	}
+
+	private Map<String, Object> checkLogin(HttpServletRequest request, HttpServletResponse response) {
+		String namiToken = request.getParameter("namiToken");
+		Map<String, Object> obj = SessionManager.get(namiToken);
+		if (obj != null) {
+			Map<String, Object> result = new HashMap<>();
+			result.put("code", 1);
+			result.put("msg", "已登录");
+			return result;
+		} else {
+			throw new SystemRuntimeException(ExceptionType.WX, "未登陆");
+		}
+
 	}
 
 }
