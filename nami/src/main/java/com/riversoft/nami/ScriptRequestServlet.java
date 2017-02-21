@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +40,7 @@ import groovy.lang.GString;
  */
 @SuppressWarnings("serial")
 @WebServlet(name = "ScriptRequestServlet", urlPatterns = "/request/*")
+@MultipartConfig
 public class ScriptRequestServlet extends HttpServlet {
 
 	static Logger logger = LoggerFactory.getLogger(ScriptRequestServlet.class);

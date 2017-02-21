@@ -1,7 +1,7 @@
 # NAMI：专为微信小程序服务端开发而生
 *面向前端开发人员的后端逻辑容器.*
 <br/>
-*百度云盘（最新版本0.2.0): [http://pan.baidu.com/s/1bJmUtg](http://pan.baidu.com/s/1bJmUtg)*
+*百度云盘（最新版本0.2.1): [http://pan.baidu.com/s/1bJmUtg](http://pan.baidu.com/s/1bJmUtg)*
 
 
 ## 什么是NAMI
