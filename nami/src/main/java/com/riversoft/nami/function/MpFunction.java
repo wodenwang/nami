@@ -30,6 +30,8 @@ import com.riversoft.weixin.common.jsapi.JsAPISignature;
 import com.riversoft.weixin.common.util.XmlObjectMapper;
 import com.riversoft.weixin.mp.base.AppSetting;
 import com.riversoft.weixin.mp.jsapi.JsAPIs;
+import com.riversoft.weixin.mp.template.Data;
+import com.riversoft.weixin.mp.template.Templates;
 import com.riversoft.weixin.pay.base.BaseResponse;
 import com.riversoft.weixin.pay.base.PaySetting;
 import com.riversoft.weixin.pay.payment.Payments;
@@ -66,6 +68,29 @@ public class MpFunction {
 	 */
 	public JsAPISignature signature(String url) {
 		return JsAPIs.with(getSetting()).createJsAPISignature(url);
+	}
+
+	/**
+	 * 推送模板消息
+	 * 
+	 * @param message
+	 * @return 模板消息ID
+	 */
+	public long sendTemplateMsg(Map<String, Object> message) {
+		String openId = (String) message.get("openId");
+		String templateId = (String) message.get("template");
+		String url = (String) message.get("url");
+		Map<String, Map<String, String>> params = (Map<String, Map<String, String>>) message.get("data");
+		Map<String, Data> data = new HashMap<>();
+		if (params != null) {
+			for (String type : params.keySet()) {
+				Map<String, String> value = params.get(type);
+				Data item = new Data(value.get("value"), value.get("color"));
+				data.put(type, item);
+			}
+		}
+		long msgId = Templates.with(getSetting()).send(openId, templateId, url, data);
+		return msgId;
 	}
 
 	/**
