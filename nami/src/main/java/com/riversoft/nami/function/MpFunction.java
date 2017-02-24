@@ -78,7 +78,7 @@ public class MpFunction {
 	 */
 	public long sendTemplateMsg(Map<String, Object> message) {
 		String openId = (String) message.get("openId");
-		String templateId = (String) message.get("template");
+		String templateId = (String) message.get("templateId");
 		String url = (String) message.get("url");
 		Map<String, Map<String, String>> params = (Map<String, Map<String, String>>) message.get("data");
 		Map<String, Data> data = new HashMap<>();
