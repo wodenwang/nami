@@ -13,6 +13,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.riversoft.core.Config;
 import com.riversoft.core.exception.ExceptionType;
 import com.riversoft.core.exception.SystemRuntimeException;
 import com.riversoft.core.script.ExpressionAndScriptExecutors;
@@ -62,5 +63,15 @@ public class NamiFunction {
 
 		logger.error(msg.toString());
 		throw new SystemRuntimeException(ExceptionType.SCRIPT, msg.toString());
+	}
+
+	/**
+	 * 获取配置参数
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public String conf(String key) {
+		return Config.get(key);
 	}
 }
