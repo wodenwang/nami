@@ -32,6 +32,7 @@ import com.riversoft.weixin.mp.base.AppSetting;
 import com.riversoft.weixin.mp.jsapi.JsAPIs;
 import com.riversoft.weixin.mp.template.Data;
 import com.riversoft.weixin.mp.template.Templates;
+import com.riversoft.weixin.mp.care.CareMessages;
 import com.riversoft.weixin.pay.base.BaseResponse;
 import com.riversoft.weixin.pay.base.PaySetting;
 import com.riversoft.weixin.pay.payment.Payments;
@@ -68,6 +69,17 @@ public class MpFunction {
 	 */
 	public JsAPISignature signature(String url) {
 		return JsAPIs.with(getSetting()).createJsAPISignature(url);
+	}
+
+	/**
+	 * 推送客户消息
+	 */
+	public void sendCareMsg(Map<String, Object> map) {
+		if (map.containsKey("from")) {
+			CareMessages.with(getSetting()).text((String) map.get("openId"), (String) map.get("text"), (String) map.get("from"));
+		} else {
+			CareMessages.with(getSetting()).text((String) map.get("openId"), (String) map.get("text"));
+		}
 	}
 
 	/**
