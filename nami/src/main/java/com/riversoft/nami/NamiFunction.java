@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +49,19 @@ public class NamiFunction {
 		}
 		Map<String, Object> context = new HashMap<>();
 		context.put("args", args);
-		return ExpressionAndScriptExecutors.getInstance().evaluateScript(scriptVo, context);
+
+		if (StringUtils.startsWith(file.getName().toLowerCase(), "execute_")
+				|| StringUtils.startsWith(file.getName().toLowerCase(), "save_")
+				|| StringUtils.startsWith(file.getName().toLowerCase(), "update_")
+				|| StringUtils.startsWith(file.getName().toLowerCase(), "delete_")) {// 事务
+			return ScriptExecuteService.getInstance().executeScript(scriptVo, context);
+		} else if (StringUtils.startsWith(file.getName().toLowerCase(), "get_")
+				|| StringUtils.startsWith(file.getName().toLowerCase(), "find_")
+				|| StringUtils.startsWith(file.getName().toLowerCase(), "query_")) {// 只读
+			return ScriptExecuteService.getInstance().getScript(scriptVo, context);
+		} else {// 常规
+			return ExpressionAndScriptExecutors.getInstance().evaluateScript(scriptVo, context);
+		}
 	}
 
 	/**

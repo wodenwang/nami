@@ -114,6 +114,7 @@ public class ExpressionAndScriptExecutors {
 			} else {
 				throw new SystemRuntimeException(ExceptionType.SCRIPT, "请求协议不合法");
 			}
+			//TODO 脚本缓存改造
 			script = FileUtils.readFileToString(scriptFile, "UTF-8");
 		}
 	}

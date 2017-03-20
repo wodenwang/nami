@@ -58,8 +58,7 @@ public class ScriptRequestServlet extends HttpServlet {
 
 		Object result;
 		try {
-			ScriptValueObject scriptVo = findScriptFromUrl(requestUri);
-			result = ExpressionAndScriptExecutors.getInstance().evaluateScript(scriptVo);// 无上下文
+			result = evaluateScript(requestUri);
 		} catch (SystemRuntimeException e) {
 			Map<String, Object> errResult = new HashMap<>();
 			String msg = e.getExtMessage();
@@ -119,7 +118,8 @@ public class ScriptRequestServlet extends HttpServlet {
 	 * @param requestUri
 	 * @return
 	 */
-	private ScriptValueObject findScriptFromUrl(String requestUri) {
+	private Object evaluateScript(String requestUri) {
+		ScriptValueObject scriptVo;
 		String path = StringUtils.substring(requestUri, "/request".length());
 
 		File file = new File(Platform.getRequestPath(), path);
@@ -128,10 +128,23 @@ public class ScriptRequestServlet extends HttpServlet {
 		}
 
 		try {
-			return new ScriptValueObject(file);
+			scriptVo = new ScriptValueObject(file);
 		} catch (IOException e) {
 			logger.error("", e);
 			throw new SystemRuntimeException(ExceptionType.SCRIPT, "脚本[" + file.getAbsolutePath() + "]无法读取.", e);
+		}
+
+		if (StringUtils.startsWith(file.getName().toLowerCase(), "execute_")
+				|| StringUtils.startsWith(file.getName().toLowerCase(), "save_")
+				|| StringUtils.startsWith(file.getName().toLowerCase(), "update_")
+				|| StringUtils.startsWith(file.getName().toLowerCase(), "delete_")) {// 事务
+			return ScriptExecuteService.getInstance().executeScript(scriptVo);
+		} else if (StringUtils.startsWith(file.getName().toLowerCase(), "get_")
+				|| StringUtils.startsWith(file.getName().toLowerCase(), "find_")
+				|| StringUtils.startsWith(file.getName().toLowerCase(), "query_")) {// 只读
+			return ScriptExecuteService.getInstance().getScript(scriptVo);
+		} else {// 常规
+			return ExpressionAndScriptExecutors.getInstance().evaluateScript(scriptVo);
 		}
 	}
 

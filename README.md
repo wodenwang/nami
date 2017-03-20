@@ -106,10 +106,19 @@ main();
 3. 前端回调结果
 ![](http://i.imgur.com/29RPWnK.png)
 
-## 系列文章
-- [NAMI来了！第一个NAMI小程序Hello World！(含视频)](http://mp.weixin.qq.com/s?__biz=MzI2MDE0MjA5MQ==&mid=2247483828&idx=1&sn=cf997d92abd1783b5746bc6ac5afe646&chksm=ea6f64d0dd18edc61b4fcc158c91c342b4ad75891bb083dabc2777946808157da56e3846790a&scene=18#wechat_redirect)
-- [NAMI来了！五分钟让微信小程序接上数据库（含视频）](http://mp.weixin.qq.com/s?__biz=MzI2MDE0MjA5MQ==&mid=2247483854&idx=1&sn=5c80bf25dbbbc7637c758929bf5d237d&chksm=ea6f64aadd18edbc6bf84be857711886f072d01c5bd07804befeb77e82e7283569187c1fb178#rd)
+## 开发规范
+### 事务管理
+*NAMI采用函数式开发，无论function抑或request，一个文件代表一个函数（或请求）。NAMI约定：<br/>*
+- 文件名以execute_，save_，update_，delete_开头的逻辑，会限定在一个事务中执行，事务支持嵌套。
+- 文件名以get_，find_，query_开头的逻辑，以只读方式执行，也就是说在这种逻辑中执行的写操作，最终都会被NAMI回滚。
+- 采用其他名称开头的，则认为每次执行db函数的exec，save等操作时事务自动提交。
 
+## 系列文章
+- [NAMI来了！第一个NAMI小程序Hello World！(含视频)](http://mp.weixin.qq.com/s/229Ni6VOeLEkEaUH7CfWVg)
+- [NAMI来了！五分钟让微信小程序接上数据库（含视频）](http://mp.weixin.qq.com/s/M05_V7QecDZJMLZ_QPhHLA)
+- [NAMI赞赏案例分析：引子（一）](http://mp.weixin.qq.com/s/UnS5Xjlc_3N66l2bP7wAlQ)
+- [NAMI赞赏案例分析：代码实战（二）](http://mp.weixin.qq.com/s/GmHD_0LJWXAjswA94h-MPw)
+- 
 ## 如何打包
 用maven构建，根目录执行：
 ```
@@ -120,14 +129,10 @@ mvn clean install
 ## 关于我们
 - woden
 <br/>
-BPMT微信快速开发平台核心开发
-<br/>
-微信公众号: **全栈生姜头** 
+BPMT微信快速开发平台核心开发，微信公众号: **全栈生姜头** 。
 <br/>
 ![](http://i.imgur.com/bfh9QVR.jpg)
 
 - borball
 <br/>
-开源项目微信JavaSDK([https://github.com/borball/weixin-sdk](https://github.com/borball/weixin-sdk "微信SDK"))发起人
-<br/>
-BPMT快速开发平台核心开发
+开源项目微信JavaSDK([https://github.com/borball/weixin-sdk](https://github.com/borball/weixin-sdk "微信SDK"))发起人。
