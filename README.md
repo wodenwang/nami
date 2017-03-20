@@ -127,12 +127,9 @@ mvn clean install
 打包结果在/package/target/nami-pack-\<platform>.zip, platform = nojdk|win32|win64|linux32|linux64
 
 ## 关于我们
-- woden
-<br/>
+- woden（[http://github.com/wodenwang](http://github.com/wodenwang)）
 BPMT微信快速开发平台核心开发，微信公众号: **全栈生姜头** 。
-<br/>
 ![](http://i.imgur.com/bfh9QVR.jpg)
 
-- borball
-<br/>
-开源项目微信JavaSDK([https://github.com/borball/weixin-sdk](https://github.com/borball/weixin-sdk "微信SDK"))发起人。
+- borball（[http://github.com/borball](http://github.com/borball)）
+开源项目微信JavaSDK([https://github.com/borball/weixin-sdk](https://github.com/borball/weixin-sdk))发起人。
