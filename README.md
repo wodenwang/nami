@@ -86,8 +86,7 @@ NAMI**也可以成为你JAVA项目的其中一个开源独立JAR包**，帮你�
 后端源码：
 
 ```javascript
-//definde
-function main() {
+(function() {
 	var a = request.getString("a") || 'none';
 	var b = request.getInteger("b") || 0;
 
@@ -95,10 +94,8 @@ function main() {
 		a : a,
 		b : b
 	}
-}
 
-// invoke
-main();
+})();
 ```
 
 3. 前端回调结果
