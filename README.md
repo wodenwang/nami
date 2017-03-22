@@ -63,16 +63,7 @@ NAMI**也可以成为你JAVA项目的其中一个开源独立JAR包**，帮你�
         a : 'hello',
         b : 2
       },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
-      success: function(res){
-        // success
-      },
-      fail: function() {
-        // fail
-      },
       complete: function(res) {
-        // complete
         console.log("调用完成");
         console.log(res.data);
       }
