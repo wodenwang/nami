@@ -1,5 +1,4 @@
-//definde
-function main() {
+(function() {
 	var a = request.getString("a") || 'none';
 	var b = request.getInteger("b") || 0;
 
@@ -14,7 +13,4 @@ function main() {
 		dd : 'dd'
 	} ];
 	return obj;
-}
-
-// invoke
-main();
+})();

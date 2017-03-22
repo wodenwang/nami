@@ -1,5 +1,4 @@
-//definde
-function main() {
+(function() {
 	var a = request.getString("a") || 'none';
 	var b = request.getInteger("b") || 0;
 
@@ -7,7 +6,5 @@ function main() {
 		a : a,
 		b : b
 	}
-}
 
-// invoke
-main();
+})();
