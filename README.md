@@ -82,9 +82,7 @@ NAMI**也可以成为你JAVA项目的其中一个开源独立JAR包**，帮你�
 
 2. 启动NAMI后,在request目录中增加脚本
 ![](http://i.imgur.com/MCEv7r4.png)
-<br/>
 ![](http://i.imgur.com/HTvnQMU.png)
-<br/>
 后端源码：
 
 ```javascript
