@@ -14,9 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.riversoft.core.BeanFactory;
-import com.riversoft.weixin.common.util.JsonMapper;
-
-import jdk.nashorn.api.scripting.JSObject;
+import com.riversoft.util.JsonMapper;
 
 /**
  * @author woden
@@ -33,15 +31,14 @@ public class JavascriptScriptTest {
 
 	@Test
 	public void testArray() {
-		String script = "function a(){return [1,2,3,4];};a();";
+		String script = "[{a:1},{b:2},2,['ad',2,{d:1}]]";
 		Map<String, Object> scope = new HashMap<>();
 		BasicScriptExecutionContext context = new BasicScriptExecutionContext(scope);
-		JSObject obj = (JSObject) ExpressionAndScriptExecutors.getInstance().evaluateScript(ScriptType.JAVASCRIPT,
-				script, context);
-		logger.debug("result:{},class:{},size:{}", obj.toString(), obj.getClass(), obj.values());
-		logger.debug("to json:{}", JsonMapper.defaultMapper().toJson(obj.values()));
-		int[] result = { 1, 2, 3, 4 };
-		logger.debug("to json:{}", JsonMapper.defaultMapper().toJson(result));
+		Object obj = ExpressionAndScriptExecutors.getInstance().evaluateScript(ScriptType.JAVASCRIPT, script, context);
+		logger.debug("result:{},class:{}", obj, obj.getClass());
+		logger.debug("to json:{}", JsonMapper.defaultMapper().toJson(obj));
+
 		// Assert.assertArrayEquals((int[]) obj, result);
 	}
+
 }
