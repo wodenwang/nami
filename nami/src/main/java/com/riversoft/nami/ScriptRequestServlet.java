@@ -135,7 +135,7 @@ public class ScriptRequestServlet extends HttpServlet {
 		}
 
 		if (StringUtils.startsWith(file.getName().toLowerCase(), "execute_")
-				|| StringUtils.startsWith(file.getName().toLowerCase(), "save_")
+				|| StringUtils.startsWith(file.getName().toLowerCase(), "create_")
 				|| StringUtils.startsWith(file.getName().toLowerCase(), "update_")
 				|| StringUtils.startsWith(file.getName().toLowerCase(), "delete_")) {// 事务
 			return ScriptExecuteService.getInstance().executeScript(scriptVo);

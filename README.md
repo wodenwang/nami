@@ -95,7 +95,7 @@ NAMI**也可以成为你JAVA项目的其中一个开源独立JAR包**，帮你�
 ## 开发规范
 ### 事务管理
 *NAMI采用函数式开发，无论function抑或request，一个文件代表一个函数（或请求）。NAMI约定：<br/>*
-- 文件名以execute_，save_，update_，delete_开头的逻辑，会限定在一个事务中执行，事务支持嵌套。
+- 文件名以execute_，create_，update_，delete_开头的逻辑，会限定在一个事务中执行，事务支持嵌套。
 - 文件名以get_，find_，query_开头的逻辑，以只读方式执行，也就是说在这种逻辑中执行的写操作，最终都会被NAMI回滚。
 - 采用其他名称开头的，则认为每次执行db函数的exec，save等操作时事务自动提交。
 
