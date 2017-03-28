@@ -28,6 +28,7 @@ import com.riversoft.core.script.annotation.ScriptSupport;
 import com.riversoft.util.Formatter;
 import com.riversoft.weixin.app.base.AppSetting;
 import com.riversoft.weixin.app.template.Message;
+import com.riversoft.weixin.app.template.Message.Data;
 import com.riversoft.weixin.app.template.Templates;
 import com.riversoft.weixin.common.util.XmlObjectMapper;
 import com.riversoft.weixin.pay.base.PaySetting;
@@ -65,18 +66,28 @@ public class WeAppFunction {
 	}
 
 	/**
-	 * TODO 模板消息
+	 * 模板消息
 	 * 
 	 * @param param
 	 */
-	public void send(Map<String, Object> param) {
+	public void sendTemplateMsg(Map<String, Object> param) {
 		Message message = new Message();
 		message.setToUser((String) param.get("openId"));
-		message.setFormId((String) param.get("openId"));
-		message.setTemplateId((String) param.get("openId"));
-
+		message.setFormId((String) param.get("formId"));
+		message.setTemplateId((String) param.get("templateId"));
 		message.setHighlight((String) param.get("highlight"));
 		message.setPage((String) param.get("page"));
+
+		Map<String, Map<String, String>> params = (Map<String, Map<String, String>>) param.get("data");
+		Map<String, Data> data = new HashMap<>();
+		if (params != null) {
+			for (String type : params.keySet()) {
+				Map<String, String> value = params.get(type);
+				Data item = new Data(value.get("value"), value.get("color"));
+				data.put(type, item);
+			}
+		}
+		message.setData(data);
 
 		Templates.with(getSetting()).send(message);
 	}
