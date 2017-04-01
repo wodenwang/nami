@@ -7,9 +7,11 @@ package com.riversoft.nami;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -19,11 +21,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.riversoft.core.context.RequestContext;
+import com.riversoft.core.context.UploadFile;
 import com.riversoft.core.context.VariableContext;
 import com.riversoft.core.exception.ExceptionType;
 import com.riversoft.core.exception.SystemRuntimeException;
@@ -45,13 +53,15 @@ public class ScriptRequestServlet extends HttpServlet {
 
 	static Logger logger = LoggerFactory.getLogger(ScriptRequestServlet.class);
 
+	// 上传配置
+	private static final int MEMORY_THRESHOLD = 1024 * 1024 * 10; // 10MB
+
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		// 初始化上下文
 		initContext(request);
-
 		// 路由执行
 		String requestUri = request.getRequestURI();
 		logger.debug("获取到请求:{},参数:{}", requestUri, request.getQueryString());
@@ -91,16 +101,90 @@ public class ScriptRequestServlet extends HttpServlet {
 	 * 
 	 * @param request
 	 */
-	private void initContext(HttpServletRequest request) {
+	private void initContext(HttpServletRequest request) throws ServletException, IOException {
 		// 设置threadlocal
 		// 设置request
 		{
-			Enumeration<String> names = request.getParameterNames();
 			Map<String, Object> params = new HashMap<>();
-			while (names.hasMoreElements()) {
-				String name = names.nextElement();
-				// logger.debug("当前表单数据[" + name + "]以设置入threadlocal.");
-				params.put(name, request.getParameterValues(name));
+			String contentType = request.getContentType(); // 获取Content-Type
+
+			// 判断post请求头部
+			if ((contentType != null) && (contentType.toLowerCase().startsWith("multipart/"))) {
+				try {
+					request.setCharacterEncoding("UTF-8");
+					FileItem file = null;
+					InputStream in = null;
+					ByteArrayOutputStream swapStream = null;
+
+					// 创建一个DiskFileItemFactory工厂
+					DiskFileItemFactory factory = new DiskFileItemFactory();
+					// 设置内存临界值 - 超过后将产生临时文件并存储于临时目录中,默认10M
+					factory.setSizeThreshold(MEMORY_THRESHOLD);
+
+					// 构造临时路径来存储上传的文件
+					// 这个路径相对当前应用的目录
+					String uploadPath = request.getSession().getServletContext().getRealPath("/tempFile");
+
+					// logger.info("临时文件目录{}",uploadPath);
+
+					// 如果目录不存在则创建
+					File uploadDir = new File(uploadPath);
+					if (!uploadDir.exists()) {
+						uploadDir.mkdir();
+					}
+
+					// 创建一个文件上传解析器
+					ServletFileUpload upload = new ServletFileUpload(factory);
+
+					// 解决上传文件名的中文乱码
+					upload.setHeaderEncoding("UTF-8");
+					// 得到 FileItem 的集合 items
+					List<FileItem> items = upload.parseRequest(request);
+					logger.info("items:{}", items.size());
+
+					// 遍历 items:
+					for (FileItem item : items) {
+						String name = item.getFieldName();
+						logger.info("fieldName:{}", name);
+						// 若是一个一般的表单域, 无须处理
+						if (item.isFormField()) {
+							String value = item.getString("utf-8");
+							params.put(name, value);
+						} else {
+							file = item;
+							String fileName = file.getName();
+							swapStream = new ByteArrayOutputStream();
+
+							in = file.getInputStream();
+							byte[] buff = new byte[1024];
+							int rc = 0;
+							while ((rc = in.read(buff)) > 0) {
+								swapStream.write(buff, 0, rc);
+							}
+							final byte[] bytes = swapStream.toByteArray();
+							if (swapStream != null) {
+								swapStream.close();
+							}
+							if (in != null) {
+								in.close();
+							}
+							UploadFile uploadFile = new UploadFile();
+							uploadFile.setName(fileName);//文件名
+							uploadFile.setValue(bytes);//文件二进制流
+							params.put(name, uploadFile);
+						}
+					}
+				} catch (FileUploadException e) {
+					logger.warn("上传文件错误", e);
+				}
+			} else {
+				Enumeration<String> names = request.getParameterNames();
+
+				while (names.hasMoreElements()) {
+					String name = names.nextElement();
+					// logger.debug("当前表单数据[" + name + "]以设置入threadlocal.");
+					params.put(name, request.getParameterValues(name));
+				}
 			}
 			RequestContext.init(request, params);// 设置
 		}

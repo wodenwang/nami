@@ -32,7 +32,7 @@ abstract class BaseContext {
 	protected BaseContext(Map<String, ?> params) {
 		values.putAll(params);
 	}
-
+	
 	/**
 	 * 获取对象
 	 * 
@@ -267,6 +267,19 @@ abstract class BaseContext {
 	 */
 	public <T> List<T> getBeans(String name, Class<T> type) {
 		return ValueConvertUtils.convertArray(getStrings(name), type);
+	}
+
+	/**
+	 * 获取文件byte[]
+	 * @param name
+	 * @return
+	 */
+	public UploadFile getFile(String name) {
+		Object obj = get(name);
+		if (obj instanceof UploadFile) {
+			return (UploadFile) get(name);
+		}
+		return null;
 	}
 
 	/**
