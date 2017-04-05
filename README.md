@@ -1,5 +1,6 @@
 # NAMI：专为微信小程序服务端开发而生
 *面向前端开发人员的后端逻辑容器.*
+*[NamiAPI:](https://hyhcoder.gitbooks.io/namiapi/content/),指导如何开始及函数库的使用
 <br/>
 *百度云盘（最新版本0.2.1): [http://pan.baidu.com/s/1bJmUtg](http://pan.baidu.com/s/1bJmUtg)*
 
