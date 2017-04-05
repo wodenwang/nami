@@ -2,9 +2,20 @@ package com.riversoft.core.context;
 
 public class UploadFile {
 
-	private String name = null;
+	/**
+	 * 文件名
+	 */
+	private String name;
 
-	private byte[] value = null;
+	/**
+	 * 字节流
+	 */
+	private byte[] value;
+
+	public UploadFile(String name, byte[] value) {
+		this.name = name;
+		this.value = value;
+	}
 
 	public String getName() {
 		return name;

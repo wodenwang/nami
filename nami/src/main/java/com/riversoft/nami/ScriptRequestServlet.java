@@ -7,11 +7,10 @@ package com.riversoft.nami;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -20,12 +19,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,9 +49,6 @@ import groovy.lang.GString;
 public class ScriptRequestServlet extends HttpServlet {
 
 	static Logger logger = LoggerFactory.getLogger(ScriptRequestServlet.class);
-
-	// 上传配置
-	private static final int MEMORY_THRESHOLD = 1024 * 1024 * 10; // 10MB
 
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
@@ -106,83 +100,28 @@ public class ScriptRequestServlet extends HttpServlet {
 		// 设置request
 		{
 			Map<String, Object> params = new HashMap<>();
-			String contentType = request.getContentType(); // 获取Content-Type
 
-			// 判断post请求头部
-			if ((contentType != null) && (contentType.toLowerCase().startsWith("multipart/"))) {
-				try {
-					request.setCharacterEncoding("UTF-8");
-					FileItem file = null;
-					InputStream in = null;
-					ByteArrayOutputStream swapStream = null;
+			// 文件类请求
+			if (ServletFileUpload.isMultipartContent(request)) {
+				Collection<Part> parts = request.getParts();
+				for (Part part : parts) {
+					String name = part.getName();
+					String fileName = getFileName(part);
 
-					// 创建一个DiskFileItemFactory工厂
-					DiskFileItemFactory factory = new DiskFileItemFactory();
-					// 设置内存临界值 - 超过后将产生临时文件并存储于临时目录中,默认10M
-					factory.setSizeThreshold(MEMORY_THRESHOLD);
-
-					// 构造临时路径来存储上传的文件
-					// 这个路径相对当前应用的目录
-					String uploadPath = request.getSession().getServletContext().getRealPath("/tempFile");
-
-					// logger.info("临时文件目录{}",uploadPath);
-
-					// 如果目录不存在则创建
-					File uploadDir = new File(uploadPath);
-					if (!uploadDir.exists()) {
-						uploadDir.mkdir();
+					if (StringUtils.isNotEmpty(fileName)) {
+						logger.debug("获取文件:{} = {}", name, fileName);
+						params.put(name, new UploadFile(fileName, IOUtils.toByteArray(part.getInputStream())));
+					} else {
+						String value = IOUtils.toString(part.getInputStream(), "utf-8");
+						logger.debug("{} = {}", name, value);
+						params.put(name, value);
 					}
-
-					// 创建一个文件上传解析器
-					ServletFileUpload upload = new ServletFileUpload(factory);
-
-					// 解决上传文件名的中文乱码
-					upload.setHeaderEncoding("UTF-8");
-					// 得到 FileItem 的集合 items
-					List<FileItem> items = upload.parseRequest(request);
-					logger.info("items:{}", items.size());
-
-					// 遍历 items:
-					for (FileItem item : items) {
-						String name = item.getFieldName();
-						logger.info("fieldName:{}", name);
-						// 若是一个一般的表单域, 无须处理
-						if (item.isFormField()) {
-							String value = item.getString("utf-8");
-							params.put(name, value);
-						} else {
-							file = item;
-							String fileName = file.getName();
-							swapStream = new ByteArrayOutputStream();
-
-							in = file.getInputStream();
-							byte[] buff = new byte[1024];
-							int rc = 0;
-							while ((rc = in.read(buff)) > 0) {
-								swapStream.write(buff, 0, rc);
-							}
-							final byte[] bytes = swapStream.toByteArray();
-							if (swapStream != null) {
-								swapStream.close();
-							}
-							if (in != null) {
-								in.close();
-							}
-							UploadFile uploadFile = new UploadFile();
-							uploadFile.setName(fileName);//文件名
-							uploadFile.setValue(bytes);//文件二进制流
-							params.put(name, uploadFile);
-						}
-					}
-				} catch (FileUploadException e) {
-					logger.warn("上传文件错误", e);
 				}
 			} else {
 				Enumeration<String> names = request.getParameterNames();
-
 				while (names.hasMoreElements()) {
 					String name = names.nextElement();
-					// logger.debug("当前表单数据[" + name + "]以设置入threadlocal.");
+					logger.debug("当前表单数据[{}]以设置入threadlocal,值:{}", name, request.getParameterValues(name));
 					params.put(name, request.getParameterValues(name));
 				}
 			}
@@ -192,6 +131,29 @@ public class ScriptRequestServlet extends HttpServlet {
 		// 设置variable
 		{
 			VariableContext.init();
+		}
+	}
+
+	/**
+	 * 获取文件名
+	 * 
+	 * @param part
+	 * @return
+	 */
+	private String getFileName(Part part) {
+
+		try {// servlet3.1才支持
+			return part.getSubmittedFileName();
+		} catch (Throwable e) {
+
+			String header = part.getHeader("Content-Disposition");
+			// logger.debug("header:{}", header);
+			if (header.indexOf("filename=\"") < 0) {
+				return null;
+			}
+
+			String fileName = header.substring(header.indexOf("filename=\"") + 10, header.lastIndexOf("\""));
+			return fileName;
 		}
 	}
 
