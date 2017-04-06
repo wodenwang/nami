@@ -1,10 +1,5 @@
 # NAMI：专为微信小程序服务端开发而生
-*面向前端开发人员的后端逻辑容器.
-<br/>
-*[NamiAPI:](https://hyhcoder.gitbooks.io/namiapi/content/),指导如何开始及函数库的使用
-<br/>
-*百度云盘（最新版本0.2.1): [http://pan.baidu.com/s/1bJmUtg](http://pan.baidu.com/s/1bJmUtg)*
-
+*面向前端开发人员的后端逻辑容器.*
 
 ## 什么是NAMI
 微信小程序的前端框架，官方命名为MINA；那我们的非官方后端就呼应一下，姑且命名为NAMI（纳米）。<br/>
@@ -101,7 +96,14 @@ NAMI**也可以成为你JAVA项目的其中一个开源独立JAR包**，帮你�
 - 文件名以get_，find_，query_开头的逻辑，以只读方式执行，也就是说在这种逻辑中执行的写操作，最终都会被NAMI回滚。
 - 采用其他名称开头的，则认为每次执行db函数的exec，save等操作时事务自动提交。
 
-## 系列文章
+## 资源
+### 下载
+下载运行版（百度云盘）: [http://pan.baidu.com/s/1bJmUtg](http://pan.baidu.com/s/1bJmUtg)
+
+### 文档
+在线文档：[https://hyhcoder.gitbooks.io/namiapi/content/](https://hyhcoder.gitbooks.io/namiapi/content/)
+
+### 系列文章
 - [NAMI来了！第一个NAMI小程序Hello World！(含视频)](http://mp.weixin.qq.com/s/229Ni6VOeLEkEaUH7CfWVg)
 - [NAMI来了！五分钟让微信小程序接上数据库（含视频）](http://mp.weixin.qq.com/s/M05_V7QecDZJMLZ_QPhHLA)
 - [NAMI赞赏案例分析：引子（一）](http://mp.weixin.qq.com/s/UnS5Xjlc_3N66l2bP7wAlQ)
