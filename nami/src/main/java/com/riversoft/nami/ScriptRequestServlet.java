@@ -91,7 +91,7 @@ public class ScriptRequestServlet extends HttpServlet {
 	}
 
 	/**
-	 * 初始化request和session的localthread
+	 * 初始化request和session的threadlocal
 	 * 
 	 * @param request
 	 */
