@@ -169,7 +169,13 @@
 			<groupId>com.aliyun</groupId>
 			<artifactId>aliyun-java-sdk-sms</artifactId>
 		</dependency>
-
+        
+        <!-- redis client -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
+        
 		<!-- servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
