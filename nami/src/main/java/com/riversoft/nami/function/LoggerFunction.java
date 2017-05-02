@@ -27,7 +27,7 @@ public class LoggerFunction {
 	 * @param msg
 	 * @param args
 	 */
-	public static void debug(String msg, Object... args) {
+	public void debug(String msg, Object... args) {
 		logger.debug(msg, args);
 	}
 
@@ -37,7 +37,7 @@ public class LoggerFunction {
 	 * @param msg
 	 * @param args
 	 */
-	public static void info(String msg, Object... args) {
+	public void info(String msg, Object... args) {
 		logger.info(msg, args);
 	}
 
@@ -47,7 +47,7 @@ public class LoggerFunction {
 	 * @param msg
 	 * @param args
 	 */
-	public static void warn(String msg, Object... args) {
+	public void warn(String msg, Object... args) {
 		logger.warn(msg, args);
 	}
 
@@ -57,7 +57,7 @@ public class LoggerFunction {
 	 * @param msg
 	 * @param args
 	 */
-	public static void error(String msg, Object... args) {
+	public void error(String msg, Object... args) {
 		logger.error(msg, args);
 	}
 }
